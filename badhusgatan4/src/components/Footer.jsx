@@ -6,7 +6,7 @@ export default function Footer() {
     <footer className="footer">
       <div className="container footer__inner">
         <div>
-          <a href="#/" aria-label="badhub – startsidan">
+          <a href="#/" aria-label="badhuset – startsidan">
             <Logo />
           </a>
           <p className="footer__address mono">{site.address}</p>

@@ -18,9 +18,6 @@ export default function Testimonials() {
     <section className="section section--tint" id="kundroster">
       <div className="container">
         <Reveal className="section__head">
-          <p className="eyebrow">
-            <span className="mono">04</span> Kundröster
-          </p>
           <h2 className="h2">{testimonialsIntro.title}</h2>
         </Reveal>
 

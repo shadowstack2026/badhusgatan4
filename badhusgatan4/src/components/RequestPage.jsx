@@ -82,9 +82,6 @@ export default function RequestPage({ preselect }) {
     return (
       <main className="request">
         <div className="container request__inner request__thanks">
-          <p className="eyebrow">
-            <span className="mono">{sent.waitlist ? 'Väntelista' : 'Förfrågan'}</span>
-          </p>
           <h1 className="h2">{requestTexts.thanksTitle}</h1>
           <p className="lead">{requestTexts.disclaimer}</p>
           <a href="#/" className="btn btn--ghost">

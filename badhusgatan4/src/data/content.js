@@ -31,9 +31,9 @@ export const generalStatus = 'fa' // TILLFÄLLIGT – välj "lediga", "fa" eller
 //  2. KONTAKTUPPGIFTER OCH ADRESS
 // ---------------------------------------------------------------------------
 export const site = {
-  name: 'badhub', // arbetsnamn
+  name: 'badhuset', // arbetsnamn
   address: 'Badhusgatan 4 · Helsingborg',
-  email: 'hej@badhub.example', // TILLFÄLLIGT
+  email: 'hej@badhuset.example', // TILLFÄLLIGT
   phone: '000-000 00 00', // TILLFÄLLIGT
 }
 
@@ -127,29 +127,26 @@ export const workspaces = [
 ]
 
 // ---------------------------------------------------------------------------
-//  6. COMMUNITY – företagen som sitter här
+//  6. COMMUNITY – företagen som sitter här (logotyp-karusellen)
 //     Lägg till ett företag: kopiera ett block { ... }, klistra in under och
 //     ändra uppgifterna. Ta bort ett företag: radera hela blocket.
-//       name      = företagets namn
-//       field     = bransch
-//       initials  = två bokstäver som visas som logga
-//       url       = länk till hemsidan (lämna '' för ingen länk)
-//       example   = true visar texten "Exempel". Ändra till false för riktiga företag.
+//       name = företagets namn
+//       logo = sökväg till en VIT logga (SVG eller PNG) i mappen public/logos/
+//       url  = länk till företagets hemsida (öppnas i ny flik)
 // ---------------------------------------------------------------------------
 export const communityIntro = {
   title: 'Vilka som sitter här.',
-  text: 'Små bolag och ensamföretagare som jobbar digitalt. Det här är några av dem.',
+  text: 'Små bolag och ensamföretagare som jobbar digitalt.',
 }
 
-// TILLFÄLLIGT – alla företag nedan är exempelföretag
+// TILLFÄLLIGT – alla företag och logotyper nedan är exempel
 export const companies = [
-  { name: 'Nordlys Studio', field: 'Webbdesign', initials: 'NS', url: 'https://example.com', example: true },
-  { name: 'Kvarnen Data', field: 'Systemutveckling', initials: 'KD', url: 'https://example.com', example: true },
-  { name: 'Fjord & Frisk', field: 'Marknadsföring', initials: 'FF', url: 'https://example.com', example: true },
-  { name: 'Lilla Konsulten', field: 'IT-konsult', initials: 'LK', url: 'https://example.com', example: true },
-  { name: 'Hamnvakt Media', field: 'Foto & film', initials: 'HM', url: 'https://example.com', example: true },
-  { name: 'Skåne Pixel', field: 'Apputveckling', initials: 'SP', url: 'https://example.com', example: true },
-  { name: 'Tråd & Text', field: 'Copywriting', initials: 'TT', url: 'https://example.com', example: true },
+  { name: 'Nordlys Studio', logo: '/logos/nordlys-studio.svg', url: 'https://example.com' }, // TILLFÄLLIGT
+  { name: 'Kvarnen Data', logo: '/logos/kvarnen-data.svg', url: 'https://example.com' }, // TILLFÄLLIGT
+  { name: 'Fjord & Frisk', logo: '/logos/fjord-frisk.svg', url: 'https://example.com' }, // TILLFÄLLIGT
+  { name: 'Lilla Konsulten', logo: '/logos/lilla-konsulten.svg', url: 'https://example.com' }, // TILLFÄLLIGT
+  { name: 'Pixelverket', logo: '/logos/pixelverket.svg', url: 'https://example.com' }, // TILLFÄLLIGT
+  { name: 'Brygga Digital', logo: '/logos/brygga-digital.svg', url: 'https://example.com' }, // TILLFÄLLIGT
 ]
 
 // ---------------------------------------------------------------------------
@@ -198,12 +195,17 @@ export const testimonials = [
 // ---------------------------------------------------------------------------
 export const day = {
   title: 'Fokus. Folk. Fika.',
+  intro: 'Lugn nog för att jobba. Levande nog för att vilja komma tillbaka.', // TILLFÄLLIGT
+  // TILLFÄLLIGT bild från lokalen
+  image:
+    'https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=1000&q=70',
   // TILLFÄLLIGT
   items: [
     { time: '09:00', title: 'Kaffe & lugn start', text: 'Dörren öppnar. Kaffet är redan bryggt och ingen har bråttom.' },
     { time: '10–12', title: 'Fokustid', text: 'Hörlurar på, mejlen får vänta. Tyst arbetsro i hela lokalen.' },
     { time: '12:00', title: 'Lunch tillsammans', text: 'Vi äter ihop, ibland ute, ibland vid långbordet.' },
-    { time: '15:00', title: 'Fredagsfika', text: 'Veckan summeras med något gott och prat om det som hänt.' },
+    { time: '15:00', title: 'Fika', text: 'Veckan summeras med något gott och prat om det som hänt.' },
+    { time: 'Första fredagen', title: 'Månadsfrukost', text: 'En gång i månaden äter vi frukost ihop och delar nyheter.' },
   ],
 }
 

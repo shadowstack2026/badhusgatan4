@@ -6,9 +6,6 @@ export default function NextStep() {
     <section className="section section--light next" id="kontakt">
       <div className="container">
         <Reveal className="next__inner">
-          <p className="eyebrow">
-            <span className="mono">06</span> Nästa steg
-          </p>
           <h2 className="h2">{nextStep.title}</h2>
           <p className="lead">{nextStep.text}</p>
           <div className="next__buttons">

@@ -1,30 +1,48 @@
+import { useEffect, useRef, useState } from 'react'
 import { day } from '../data/content'
 import Reveal from './Reveal'
 
 export default function Day() {
-  return (
-    <section className="section section--dark" id="en-dag">
-      <div className="container">
-        <Reveal className="section__head">
-          <p className="eyebrow">
-            <span className="mono">05</span> En dag hos oss
-          </p>
-          <h2 className="h2">{day.title}</h2>
-        </Reveal>
+  const list = useRef(null)
+  const [active, setActive] = useState(-1)
 
-        {/* Linjen "ritas" när listan scrollas in; raderna tonar in en och en. */}
-        <Reveal as="ol" className="timeline">
+  // Raden som ligger mitt på skärmen lyser upp.
+  useEffect(() => {
+    const io = new IntersectionObserver(
+      (entries) =>
+        entries.forEach((e) => {
+          if (e.isIntersecting) setActive(Number(e.target.dataset.i))
+        }),
+      { rootMargin: '-45% 0px -45% 0px' },
+    )
+    list.current.querySelectorAll('[data-i]').forEach((el) => io.observe(el))
+    return () => io.disconnect()
+  }, [])
+
+  return (
+    <section className="section section--dark day" id="en-dag">
+      <div className="container day__grid">
+        <div className="day__side">
+          <Reveal>
+            <h2 className="h2">{day.title}</h2>
+            <p className="lead">{day.intro}</p>
+          </Reveal>
+          <Reveal delay={120} className="day__image media">
+            <img src={day.image} alt="" loading="lazy" />
+          </Reveal>
+        </div>
+
+        <ol className="day__list" ref={list}>
           {day.items.map((it, i) => (
-            <li key={it.time} className="timeline__item" style={{ '--n': i }}>
-              <span className="timeline__time mono">{it.time}</span>
-              <span className="timeline__dot" aria-hidden="true" />
+            <Reveal as="li" key={it.title} data-i={i} className={`day__row${i === active ? ' is-active' : ''}`}>
+              <span className="day__time mono">{it.time}</span>
               <div>
                 <h3>{it.title}</h3>
                 <p>{it.text}</p>
               </div>
-            </li>
+            </Reveal>
           ))}
-        </Reveal>
+        </ol>
       </div>
     </section>
   )

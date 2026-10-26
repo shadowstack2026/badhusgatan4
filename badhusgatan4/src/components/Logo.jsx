@@ -1,19 +1,11 @@
-import { useState } from 'react'
+import logo from '../assets/logga2-transparent.png'
 import { site } from '../data/content'
 
-// Loggan ligger i public/badhub-mark.png. Saknas filen visas bara ordmärket.
+// Loggan (src/assets/logga2.png) har bakgrunden borttagen så att den smälter in med bilden.
 export default function Logo() {
-  const [hasMark, setHasMark] = useState(true)
   return (
     <span className="logo">
-      {hasMark && (
-        <img
-          className="logo__mark"
-          src="/badhub-mark.png"
-          alt=""
-          onError={() => setHasMark(false)}
-        />
-      )}
+      <img className="logo__mark" src={logo} alt="" />
       <span className="logo__word">{site.name}</span>
     </span>
   )

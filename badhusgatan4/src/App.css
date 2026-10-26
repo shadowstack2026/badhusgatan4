@@ -18,28 +18,6 @@
   color: var(--light);
 }
 
-.eyebrow {
-  font-family: var(--mono);
-  font-size: 0.78rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--accent);
-  display: flex;
-  gap: 14px;
-  align-items: center;
-  margin-bottom: 24px;
-}
-.eyebrow .mono::after {
-  content: '';
-  display: inline-block;
-  width: 28px;
-  height: 1px;
-  background: currentColor;
-  margin-left: 14px;
-  vertical-align: middle;
-  opacity: 0.6;
-}
-
 .h2 {
   font-size: clamp(2rem, 4.2vw, 3.4rem);
   line-height: 1.12;
@@ -350,7 +328,7 @@
   gap: 10px;
 }
 .logo__mark {
-  height: 30px;
+  height: 40px;
   width: auto;
 }
 .logo__word {
@@ -435,13 +413,12 @@
   column-gap: clamp(32px, 8vw, 120px);
   margin-bottom: clamp(56px, 8vw, 104px);
 }
-.about__intro .eyebrow,
 .about__intro .h2 {
   grid-column: 1;
 }
 .about__copy {
   grid-column: 2;
-  grid-row: 1 / span 2;
+  grid-row: 1;
   align-self: end;
   display: grid;
   gap: 20px;
@@ -574,157 +551,174 @@
 }
 
 /* =========================================================================
-   03 Community
+   Community – logotyp-karusell
    ========================================================================= */
-.arrows {
+.community {
+  border-top: 1px solid var(--line-dark);
+  overflow: hidden;
+}
+.community__head {
+  text-align: center;
+  margin-bottom: clamp(56px, 8vw, 96px);
+}
+.community .h2 {
+  margin-inline: auto;
+  max-width: none;
+}
+.community .lead {
+  margin-inline: auto;
+}
+.carousel {
+  --lw: 220px;
+  --gap: 64px;
+  position: relative;
+  touch-action: pan-y;
+  cursor: grab;
+  user-select: none;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 22%, #000 78%, transparent 100%);
+  mask-image: linear-gradient(90deg, transparent 0, #000 22%, #000 78%, transparent 100%);
+  padding-block: 28px;
+}
+.carousel:active {
+  cursor: grabbing;
+}
+.carousel__track {
   display: flex;
-  gap: 10px;
+  gap: var(--gap);
+  width: max-content;
+  will-change: transform;
+}
+.carousel__item {
   flex: none;
-}
-.arrows button {
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  border: 1px solid var(--line-light);
-  background: transparent;
-  font-size: 1.1rem;
-  transition:
-    background-color 0.25s,
-    color 0.25s,
-    border-color 0.25s;
-}
-.arrows button:hover:not(:disabled) {
-  background: var(--accent);
-  border-color: var(--accent);
-  color: #fff;
-}
-.arrows button:disabled {
+  width: var(--lw);
   opacity: 0.35;
-  cursor: default;
 }
-.arrows--small button {
-  width: 42px;
-  height: 42px;
-}
-
-.scroller-wrap {
-  margin-top: 8px;
-}
-.scroller {
-  display: flex;
-  gap: 20px;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  padding-inline: max(var(--gutter), calc((100vw - 1240px) / 2 + var(--gutter)));
-  scroll-padding-inline: max(var(--gutter), calc((100vw - 1240px) / 2 + var(--gutter)));
-  padding-bottom: 4px;
-  scrollbar-width: none;
-}
-.scroller::-webkit-scrollbar {
-  display: none;
-}
-.ccard {
-  flex: 0 0 clamp(240px, 24vw, 292px);
-  scroll-snap-align: start;
-}
-.ccard__inner {
-  height: 100%;
-  min-height: 300px;
-  display: flex;
-  flex-direction: column;
-  padding: 32px;
-  background: #fff;
-  border: 1px solid var(--line-light);
-  border-radius: var(--radius);
-  transition:
-    border-color 0.3s,
-    transform 0.4s var(--ease);
-}
-a.ccard__inner:hover {
-  border-color: var(--accent);
-  transform: translateY(-3px);
-}
-.ccard__logo {
-  width: 56px;
-  height: 56px;
+.carousel__btn {
   display: grid;
   place-items: center;
-  border-radius: 12px;
-  background: var(--navy);
+  width: 100%;
+  height: 76px;
+  padding: 0;
+  background: none;
+  border: 0;
   color: var(--light);
-  font-size: 1rem;
-  letter-spacing: 0.04em;
-  margin-bottom: 40px;
+  will-change: transform;
 }
-.ccard__name {
-  font-size: 1.2rem;
-  font-weight: 700;
-  letter-spacing: -0.015em;
+.carousel__btn img {
+  width: 100%;
+  height: auto;
+  pointer-events: none;
 }
-.ccard__field {
-  margin-top: 4px;
-  color: var(--muted-dark);
-  font-size: 0.93rem;
-}
-.ccard__foot {
-  margin-top: auto;
-  padding-top: 32px;
+.carousel__cta {
+  white-space: nowrap;
   display: flex;
-  justify-content: space-between;
+  align-items: center;
   gap: 12px;
-  font-size: 0.72rem;
-  letter-spacing: 0.06em;
+  font-size: 1.15rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+.carousel__plus {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border: 1.5px dashed currentColor;
+  border-radius: 50%;
+  font-weight: 300;
+  font-size: 1.4rem;
+  line-height: 1;
+}
+.carousel__link {
+  display: flex;
+  justify-content: center;
+  height: 44px;
+  margin-top: 20px;
+}
+.carousel__link a {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--muted);
+  animation: heroIn 0.6s var(--ease) both;
 }
-.ccard__go {
-  color: var(--accent);
+.carousel__circle {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--light);
+  color: var(--navy);
+  font-size: 0.9rem;
+  letter-spacing: 0;
   transition: transform 0.3s var(--ease);
-  margin-left: auto;
 }
-a.ccard__inner:hover .ccard__go {
+.carousel__link a:hover .carousel__circle {
   transform: translateX(4px);
 }
-.ccard--cta .ccard__inner {
-  border: 1.5px dashed #b4c0d2;
-  background: transparent;
-  align-items: flex-start;
+.carousel__dots {
+  display: flex;
   justify-content: center;
-  gap: 4px;
+  align-items: center;
+  gap: 10px;
+  margin-top: 36px;
 }
-.ccard--cta a.ccard__inner:hover {
-  border-color: var(--accent);
-}
-.ccard__plus {
-  font-size: 2.6rem;
-  font-weight: 300;
-  line-height: 1;
-  color: var(--accent);
-  margin-bottom: 22px;
-}
-.ccard--cta .ccard__go {
-  margin: 14px 0 0;
-  font-size: 0.78rem;
-}
-
-.progress {
+.carousel__dots button {
   position: relative;
-  height: 2px;
-  background: var(--line-light);
-  margin-top: 40px;
+  height: 8px;
+  width: 8px;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: var(--light);
+  opacity: 0.55;
+  transition:
+    width 0.45s var(--ease),
+    opacity 0.45s,
+    height 0.45s;
 }
-.progress span {
+.carousel__dots button::after {
+  content: '';
   position: absolute;
-  top: 0;
-  height: 100%;
-  background: var(--accent);
-  transition: left 0.15s linear;
+  inset: -10px -4px;
+}
+.carousel__dots button[data-dist='0'] {
+  width: 26px;
+  opacity: 1;
+}
+.carousel__dots button[data-dist='2'] {
+  width: 6px;
+  height: 6px;
+  opacity: 0.4;
+}
+.carousel__dots button[data-dist='3'] {
+  width: 4px;
+  height: 4px;
+  opacity: 0.22;
 }
 
-@media (max-width: 700px) {
-  .section__head--row {
-    flex-direction: column;
-    align-items: flex-start;
+@media (max-width: 900px) {
+  .carousel {
+    --lw: 180px;
+    --gap: 44px;
+  }
+}
+@media (max-width: 600px) {
+  .carousel {
+    --lw: 140px;
+    --gap: 28px;
+    -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 16%, #000 84%, transparent 100%);
+    mask-image: linear-gradient(90deg, transparent 0, #000 16%, #000 84%, transparent 100%);
+  }
+  .carousel__btn {
+    height: 64px;
+  }
+  .carousel__cta {
+    font-size: 0.95rem;
   }
 }
 
@@ -847,89 +841,77 @@ a.ccard__inner:hover .ccard__go {
 }
 
 /* =========================================================================
-   05 En dag hos oss
+   En dag hos oss
    ========================================================================= */
-.timeline {
-  --tw: 120px;
-  position: relative;
-  max-width: 760px;
-}
-/* Spår + blå linje som ritas */
-.timeline::before,
-.timeline::after {
-  content: '';
-  position: absolute;
-  left: calc(var(--tw) + 14px);
-  top: 14px;
-  bottom: 14px;
-  width: 1px;
-}
-.timeline::before {
-  background: var(--line-dark);
-}
-.timeline::after {
-  background: var(--accent);
-  transform: scaleY(0);
-  transform-origin: top;
-  transition: transform 2.2s var(--ease) 0.2s;
-}
-.timeline.is-visible::after {
-  transform: scaleY(1);
-}
-/* Själva listan ska inte glida – bara raderna */
-.timeline.reveal {
-  opacity: 1;
-  transform: none;
-}
-.timeline__item {
-  position: relative;
+.day__grid {
   display: grid;
-  grid-template-columns: var(--tw) 28px 1fr;
+  grid-template-columns: 2fr 3fr;
+  gap: clamp(48px, 8vw, 128px);
   align-items: start;
-  padding-bottom: clamp(36px, 5vw, 56px);
-  opacity: 0;
-  transform: translateY(16px);
-  transition:
-    opacity 0.7s var(--ease),
-    transform 0.7s var(--ease);
-  transition-delay: calc(0.35s + var(--n) * 0.45s);
 }
-.timeline__item:last-child {
-  padding-bottom: 0;
+.day__side {
+  position: sticky;
+  top: 120px;
 }
-.timeline.is-visible .timeline__item {
-  opacity: 1;
-  transform: none;
+.day .h2 {
+  max-width: 10ch;
 }
-.timeline__time {
-  font-size: 0.9rem;
+.day__image {
+  margin-top: clamp(32px, 4vw, 48px);
+  aspect-ratio: 4 / 3;
+  border-radius: 16px;
+}
+.day__list {
+  border-bottom: 1px solid rgba(148, 163, 184, 0.2);
+}
+.day__row {
+  display: grid;
+  grid-template-columns: 150px 1fr;
+  gap: 24px;
+  padding-block: clamp(32px, 4.5vw, 52px);
+  border-top: 1px solid rgba(148, 163, 184, 0.2);
+}
+.day__time {
+  font-size: 0.82rem;
+  line-height: 1.5;
   color: var(--accent);
-  padding-top: 4px;
+  padding-top: 0.55em;
 }
-.timeline__dot {
-  width: 9px;
-  height: 9px;
-  margin: 9px 0 0 10px;
-  border-radius: 50%;
-  background: var(--navy);
-  border: 1.5px solid var(--accent);
-  position: relative;
-  z-index: 1;
-}
-.timeline__item h3 {
-  font-size: clamp(1.3rem, 2.4vw, 1.75rem);
+.day__row h3 {
+  font-size: clamp(1.6rem, 3vw, 2.4rem);
+  line-height: 1.15;
   font-weight: 700;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.025em;
+  color: rgba(248, 250, 252, 0.45);
+  transition: color 0.6s var(--ease);
 }
-.timeline__item p {
-  margin-top: 6px;
+.day__row.is-active h3 {
+  color: #fff;
+}
+.day__row p {
+  margin-top: 10px;
   color: var(--muted);
-  max-width: 44ch;
+  max-width: 42ch;
 }
 
+@media (max-width: 900px) {
+  .day__grid {
+    grid-template-columns: 1fr;
+  }
+  .day__side {
+    position: static;
+  }
+  .day .h2 {
+    max-width: none;
+  }
+}
 @media (max-width: 600px) {
-  .timeline {
-    --tw: 62px;
+  .day__row {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+  .day__time {
+    padding-top: 0;
   }
 }
 
@@ -1186,14 +1168,10 @@ a.ccard__inner:hover .ccard__go {
 /* Reducerad rörelse: visa allt direkt */
 @media (prefers-reduced-motion: reduce) {
   .reveal,
-  .timeline__item,
   .hero__title,
   .hero__text,
   .hero .status {
     opacity: 1 !important;
     transform: none !important;
-  }
-  .timeline::after {
-    transform: scaleY(1);
   }
 }

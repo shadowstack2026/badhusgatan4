@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 64" fill="#fff" role="img" aria-label="Kvarnen Data">
+<g transform="translate(28 32)"><path d="M0 0L-4-24L4-24Z"/><path d="M0 0L24-4L24 4Z"/><path d="M0 0L4 24L-4 24Z"/><path d="M0 0L-24 4L-24-4Z"/><circle r="4" fill="#0B1F44" stroke="#fff" stroke-width="2"/></g>
+<text x="68" y="40" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="25" font-weight="300" textLength="86" lengthAdjust="spacingAndGlyphs">kvarnen</text>
+<text x="158" y="40" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="25" font-weight="800" textLength="60" lengthAdjust="spacingAndGlyphs">data</text>
+</svg>

@@ -32,7 +32,7 @@ export default function Navbar({ solid = false }) {
   return (
     <header className={cls}>
       <div className="container nav__inner">
-        <a href="#/" className="nav__logo" onClick={close} aria-label="badhub – startsidan">
+        <a href="#/" className="nav__logo" onClick={close} aria-label="badhuset – startsidan">
           <Logo />
         </a>
 

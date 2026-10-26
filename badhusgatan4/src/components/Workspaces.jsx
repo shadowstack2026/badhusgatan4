@@ -7,9 +7,6 @@ export default function Workspaces() {
     <section className="section section--dark" id="arbetsplatser">
       <div className="container">
         <Reveal className="section__head">
-          <p className="eyebrow">
-            <span className="mono">02</span> Arbetsplatser
-          </p>
           <h2 className="h2">{workspacesIntro.title}</h2>
         </Reveal>
 
