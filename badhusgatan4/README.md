@@ -1,16 +1,41 @@
-# React + Vite
+# Badhuset – Badhusgatan 4
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Vite + React + JavaScript. Routing med `react-router-dom`, formulär via EmailJS.
 
-Currently, two official plugins are available:
+```bash
+npm install
+npm run dev      # utveckling
+npm run build    # bygger till dist/
+```
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+Sidor: `/` startsidan, `/om-oss`, `/kom-igang` (förfrågan; `?typ=dagspass` eller `?typ=vantelista` förväljer ett val).
+Texter och kontaktuppgifter ändras i `src/data/content.js`.
 
-## React Compiler
+## Publicera
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+`public/_redirects` (Netlify) och `vercel.json` (Vercel) skickar alla adresser till `index.html`, så att direktlänkar som `/om-oss` fungerar.
 
-## Expanding the ESLint configuration
+## Formuläret (EmailJS)
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Formuläret skickar två mejl: ett till ägaren och en bekräftelse till besökaren.
+
+1. Skapa ett konto på [emailjs.com](https://www.emailjs.com) och koppla en e-posttjänst under **Email Services**. Kopiera **Service ID**.
+2. Skapa två mallar under **Email Templates**:
+   - **Ägarmallen** – *To Email*: `shadowstack2026@gmail.com` (sätts i mallen, inte i koden). *Reply To*: `{{from_email}}`.
+   - **Bekräftelsemallen** – *To Email*: `{{from_email}}` (besökarens adress).
+
+   Båda mallarna kan använda variablerna `{{from_name}}`, `{{from_email}}`, `{{phone}}`, `{{company}}`, `{{request_type}}`, `{{start_date}}`, `{{message}}` och `{{submitted_at}}`.
+3. Kopiera din **Public Key** under **Account → General**.
+4. Kopiera `.env.example` till `.env` och fyll i:
+
+   ```
+   VITE_EMAILJS_SERVICE_ID=       # Service ID
+   VITE_EMAILJS_TEMPLATE_OWNER=   # Template ID för ägarmallen
+   VITE_EMAILJS_TEMPLATE_CONFIRM= # Template ID för bekräftelsemallen
+   VITE_EMAILJS_PUBLIC_KEY=       # Public Key
+   ```
+
+5. Starta om `npm run dev` (Vite läser `.env` bara vid start). `.env` ligger i `.gitignore` och ska inte checkas in.
+   Vid publicering: lägg in samma fyra variabler i Netlify/Vercel under *Environment variables* och bygg om.
+
+Varje lyckad förfrågan sparas dessutom i webbläsarens `localStorage` (nyckel `badhub-forfragningar`, fältet `typ` visar vad personen ville ha).

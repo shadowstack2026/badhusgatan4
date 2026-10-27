@@ -13,7 +13,6 @@
 
   /* Typsnitt */
   --sans: 'Manrope', system-ui, 'Segoe UI', Roboto, sans-serif;
-  --mono: 'DM Mono', ui-monospace, Consolas, monospace;
 
   /* Rytm */
   --gutter: clamp(20px, 5vw, 56px);
@@ -84,10 +83,6 @@ button {
 :focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 3px;
-}
-
-.mono {
-  font-family: var(--mono);
 }
 
 .container {

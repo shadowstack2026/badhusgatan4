@@ -220,13 +220,13 @@ export const nextStep = {
 // ---------------------------------------------------------------------------
 //  10. MENYN – sektionerna i navigeringen (ändra bara om sektioner läggs till)
 // ---------------------------------------------------------------------------
+//     "to" = sidan, "hash" = sektionen på sidan (id).
 export const navLinks = [
-  { label: 'Platsen', id: 'platsen' },
-  { label: 'Arbetsplatser', id: 'arbetsplatser' },
-  { label: 'Community', id: 'community' },
-  { label: 'Kundröster', id: 'kundroster' },
-  { label: 'En dag hos oss', id: 'en-dag' },
-  { label: 'Kontakt', id: 'kontakt' },
+  { label: 'Om oss', to: '/om-oss' },
+  { label: 'Arbetsplatser', to: '/', hash: 'arbetsplatser' },
+  { label: 'Community', to: '/', hash: 'community' },
+  { label: 'En dag hos oss', to: '/', hash: 'en-dag' },
+  { label: 'Kontakt', to: '/', hash: 'kontakt' },
 ]
 
 // ---------------------------------------------------------------------------
@@ -250,4 +250,48 @@ export const requestTexts = {
   disclaimer:
     'En förfrågan eller plats på väntelistan är inte en bekräftad bokning. Vi hör av oss för att bekräfta.',
   thanksTitle: 'Tack! Vi hör av oss inom två arbetsdagar.',
+  consent: 'Jag godkänner att mina uppgifter används för att svara på min förfrågan.',
+  notBooking: 'Observera att detta inte är en bekräftad bokning.',
+  sendError: 'Något gick fel när förfrågan skulle skickas. Dina uppgifter finns kvar – försök igen om en stund.',
+}
+
+// ---------------------------------------------------------------------------
+//  12. OM OSS – sidan /om-oss
+// ---------------------------------------------------------------------------
+export const aboutUs = {
+  // TILLFÄLLIGT
+  hero: {
+    title: 'En mötesplats för digitala människor',
+    text: 'Badhuset är ett mindre, nördigt community för små bolag, frilansare och distansarbetare. Här mellanlandar man, hjälper varandra och hittar nya samarbeten.',
+  },
+  why: {
+    title: 'Varför Badhuset?', // TILLFÄLLIGT
+    paragraphs: [
+      // TILLFÄLLIGT
+      'Förr var badhuset stadens sociala mötesplats – dit gick man för att röra sig, vila och träffa grannarna. Ingen behövde boka något, man dök bara upp.',
+      'Vi gör samma sak för det digitala: en plats där man kommer för arbetsron och stannar för människorna.',
+    ],
+  },
+  // TILLFÄLLIGT
+  values: [
+    { title: 'Människorna först', text: 'Det är människorna vi möts av varje dag som gör platsen.' },
+    { title: 'Vi hjälper varandra framåt', text: 'Någon har alltid tid att kika på det du håller på med.' },
+    { title: 'Arbetsro och gemenskap', text: 'Lugnt nog att fokusera, levande nog att vilja komma tillbaka.' },
+  ],
+  team: {
+    title: 'Vilka som driver platsen', // TILLFÄLLIGT
+    people: [
+      // TILLFÄLLIGT – namn, roller och bilder är exempel
+      {
+        name: 'Anna Svensson',
+        role: 'Grundare & värd',
+        image: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=400&q=70',
+      },
+      {
+        name: 'Erik Nilsson',
+        role: 'Community & verksamhet',
+        image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400&q=70',
+      },
+    ],
+  },
 }

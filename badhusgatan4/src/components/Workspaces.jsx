@@ -17,7 +17,7 @@ export default function Workspaces() {
               <Reveal as="article" key={w.id} delay={i * 100} className="wcard">
                 <div className="media wcard__media">
                   <img src={w.image} alt="" loading="lazy" />
-                  <span className="wcard__num mono">{w.number}</span>
+                  <span className="wcard__num">{w.number}</span>
                 </div>
                 <div className="wcard__body">
                   <h3>{w.title}</h3>

@@ -35,7 +35,7 @@ export default function Day() {
         <ol className="day__list" ref={list}>
           {day.items.map((it, i) => (
             <Reveal as="li" key={it.title} data-i={i} className={`day__row${i === active ? ' is-active' : ''}`}>
-              <span className="day__time mono">{it.time}</span>
+              <span className="day__time">{it.time}</span>
               <div>
                 <h3>{it.title}</h3>
                 <p>{it.text}</p>

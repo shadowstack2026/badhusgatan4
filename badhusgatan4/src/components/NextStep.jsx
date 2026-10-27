@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import { nextStep, site } from '../data/content'
 import Reveal from './Reveal'
 
@@ -9,15 +10,17 @@ export default function NextStep() {
           <h2 className="h2">{nextStep.title}</h2>
           <p className="lead">{nextStep.text}</p>
           <div className="next__buttons">
-            <a href="#/kom-igang?typ=prova-dag" className="btn btn--primary">
+            <Link to="/kom-igang?typ=dagspass" className="btn btn--primary">
               Boka ett gratis dagspass <span className="btn__arrow" aria-hidden="true">→</span>
-            </a>
-            <a href="#/kom-igang?typ=vantelista" className="btn btn--ghost">
+            </Link>
+            <Link to="/kom-igang?typ=vantelista" className="btn btn--ghost">
               Ställ mig i kö <span className="btn__arrow" aria-hidden="true">→</span>
-            </a>
+            </Link>
           </div>
-          <p className="next__contact mono">
-            {site.email} · {site.phone}
+          <p className="next__contact">
+            <a href={`mailto:${site.email}`}>{site.email}</a>
+            <span className="next__sep" aria-hidden="true">·</span>
+            <a href={`tel:${site.phone.replace(/[^\d+]/g, '')}`}>{site.phone}</a>
           </p>
         </Reveal>
       </div>

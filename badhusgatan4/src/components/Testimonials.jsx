@@ -33,13 +33,13 @@ export default function Testimonials() {
                   <blockquote>{t.quote}</blockquote>
                   <figcaption>
                     <span className="avatar">
-                      {t.image ? <img src={t.image} alt="" /> : <span className="mono">{initialsOf(t.name)}</span>}
+                      {t.image ? <img src={t.image} alt="" /> : <span>{initialsOf(t.name)}</span>}
                     </span>
                     <span>
                       <strong>{t.name}</strong>
                       <span className="quote__role">
                         {t.role}, {t.company}
-                        {t.example && <span className="quote__example mono"> · Exempel</span>}
+                        {t.example && <span className="quote__example"> · Exempel</span>}
                       </span>
                     </span>
                   </figcaption>

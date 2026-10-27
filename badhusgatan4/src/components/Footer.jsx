@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import { navLinks, site } from '../data/content'
 import Logo from './Logo'
 
@@ -6,20 +7,20 @@ export default function Footer() {
     <footer className="footer">
       <div className="container footer__inner">
         <div>
-          <a href="#/" aria-label="badhuset – startsidan">
+          <Link to="/" aria-label="badhuset – startsidan">
             <Logo />
-          </a>
-          <p className="footer__address mono">{site.address}</p>
+          </Link>
+          <p className="footer__address">{site.address}</p>
         </div>
         <nav className="footer__links" aria-label="Sidfot">
           {navLinks.map((l) => (
-            <a key={l.id} href={`#/${l.id}`}>
+            <Link key={l.label} to={{ pathname: l.to, hash: l.hash ? `#${l.hash}` : '' }}>
               {l.label}
-            </a>
+            </Link>
           ))}
         </nav>
       </div>
-      <div className="container footer__bottom mono">
+      <div className="container footer__bottom">
         <span>© {new Date().getFullYear()} {site.name}</span>
         <span>Badhusgatan 4</span>
       </div>

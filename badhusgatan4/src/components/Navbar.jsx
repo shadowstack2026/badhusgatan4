@@ -1,12 +1,16 @@
 import { useEffect, useState } from 'react'
+import { Link, useLocation } from 'react-router-dom'
 import { navLinks } from '../data/content'
 import Logo from './Logo'
 
+const target = (l) => ({ pathname: l.to, hash: l.hash ? `#${l.hash}` : '' })
+
 // Ligger över hero-bilden och är genomskinlig. Efter lite scroll blir den mörk.
-// På förfrågningssidan (solid) är den alltid mörk.
+// På övriga sidor (solid) är den alltid mörk.
 export default function Navbar({ solid = false }) {
   const [scrolled, setScrolled] = useState(false)
   const [open, setOpen] = useState(false)
+  const { pathname, hash } = useLocation()
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40)
@@ -28,25 +32,27 @@ export default function Navbar({ solid = false }) {
 
   const close = () => setOpen(false)
   const cls = `nav${scrolled || solid ? ' nav--solid' : ''}${open ? ' nav--open' : ''}`
+  const isActive = (l) => (l.hash ? pathname === '/' && hash === `#${l.hash}` : pathname === l.to)
+  const current = (l) => (isActive(l) ? 'page' : undefined)
 
   return (
     <header className={cls}>
       <div className="container nav__inner">
-        <a href="#/" className="nav__logo" onClick={close} aria-label="badhuset – startsidan">
+        <Link to="/" className="nav__logo" onClick={close} aria-label="badhuset – startsidan">
           <Logo />
-        </a>
+        </Link>
 
         <nav className="nav__links" aria-label="Huvudmeny">
           {navLinks.map((l) => (
-            <a key={l.id} href={`#/${l.id}`}>
+            <Link key={l.label} to={target(l)} aria-current={current(l)}>
               {l.label}
-            </a>
+            </Link>
           ))}
         </nav>
 
-        <a href="#/kom-igang?typ=prova-dag" className="btn btn--primary nav__cta">
+        <Link to="/kom-igang?typ=dagspass" className="btn btn--primary nav__cta">
           Prova en dag <span className="btn__arrow" aria-hidden="true">→</span>
-        </a>
+        </Link>
 
         <button
           type="button"
@@ -64,20 +70,26 @@ export default function Navbar({ solid = false }) {
       <div className="nav__overlay" id="mobilmeny" aria-hidden={!open}>
         <nav aria-label="Mobilmeny">
           {navLinks.map((l, i) => (
-            <a key={l.id} href={`#/${l.id}`} onClick={close} tabIndex={open ? 0 : -1} style={{ '--i': i }}>
-              <span className="mono">0{i + 1}</span>
+            <Link
+              key={l.label}
+              to={target(l)}
+              aria-current={current(l)}
+              onClick={close}
+              tabIndex={open ? 0 : -1}
+              style={{ '--i': i }}
+            >
               {l.label}
-            </a>
+            </Link>
           ))}
-          <a
-            href="#/kom-igang?typ=prova-dag"
+          <Link
+            to="/kom-igang?typ=dagspass"
             className="btn btn--primary"
             onClick={close}
             tabIndex={open ? 0 : -1}
             style={{ '--i': navLinks.length }}
           >
             Prova en dag <span className="btn__arrow" aria-hidden="true">→</span>
-          </a>
+          </Link>
         </nav>
       </div>
     </header>

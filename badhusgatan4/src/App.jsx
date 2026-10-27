@@ -1,61 +1,26 @@
-import { useEffect, useState } from 'react'
+import { Route, Routes, useLocation } from 'react-router-dom'
 import './App.css'
 import Navbar from './components/Navbar'
-import Hero from './components/Hero'
-import About from './components/About'
-import Workspaces from './components/Workspaces'
-import Community from './components/Community'
-import Testimonials from './components/Testimonials'
-import Day from './components/Day'
-import NextStep from './components/NextStep'
 import Footer from './components/Footer'
+import ScrollManager from './components/ScrollManager'
 import RequestPage from './components/RequestPage'
-
-// Enkel hash-routing:
-//   #/                      startsidan
-//   #/community             startsidan, scrollar till sektionen med id "community"
-//   #/kom-igang?typ=eget-rum  förfrågningssidan med ett val förvalt
-function parseHash() {
-  const raw = window.location.hash.replace(/^#/, '') || '/'
-  const [path, query = ''] = raw.split('?')
-  return { path: path.replace(/^\/|\/$/g, ''), params: new URLSearchParams(query), raw }
-}
+import Home from './pages/Home'
+import OmOss from './pages/OmOss'
+import NotFound from './pages/NotFound'
 
 export default function App() {
-  const [route, setRoute] = useState(parseHash)
-
-  useEffect(() => {
-    const onChange = () => setRoute(parseHash())
-    window.addEventListener('hashchange', onChange)
-    return () => window.removeEventListener('hashchange', onChange)
-  }, [])
-
-  const isRequest = route.path === 'kom-igang'
-
-  // Scrolla till rätt sektion (eller överst) när adressen ändras.
-  useEffect(() => {
-    if (isRequest) return
-    const target = route.path ? document.getElementById(route.path) : null
-    if (target) target.scrollIntoView()
-    else window.scrollTo(0, 0)
-  }, [route.raw, isRequest, route.path])
+  const { pathname } = useLocation()
 
   return (
     <>
-      <Navbar solid={isRequest} />
-      {isRequest ? (
-        <RequestPage key={route.raw} preselect={route.params.get('typ')} />
-      ) : (
-        <main>
-          <Hero />
-          <About />
-          <Workspaces />
-          <Community />
-          <Testimonials />
-          <Day />
-          <NextStep />
-        </main>
-      )}
+      <ScrollManager />
+      <Navbar solid={pathname !== '/'} />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/om-oss" element={<OmOss />} />
+        <Route path="/kom-igang" element={<RequestPage />} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
       <Footer />
     </>
   )
