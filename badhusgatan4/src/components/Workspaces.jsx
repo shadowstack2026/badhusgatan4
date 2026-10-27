@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import { workspaces, workspacesIntro } from '../data/content'
 import Reveal from './Reveal'
 import StatusLabel from './StatusLabel'
@@ -24,10 +25,10 @@ export default function Workspaces() {
                   <p>{w.text}</p>
                   <div className="wcard__foot">
                     <StatusLabel status={w.status} />
-                    <a href={`#/kom-igang?typ=${w.id}`} className="link">
+                    <Link to={`/kom-igang?typ=${w.id}`} className="link">
                       {full ? 'Ställ dig i kö' : 'Visa intresse'}
                       <span className="link__arrow" aria-hidden="true">→</span>
-                    </a>
+                    </Link>
                   </div>
                 </div>
               </Reveal>

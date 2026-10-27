@@ -11,6 +11,23 @@ npm run build    # bygger till dist/
 Sidor: `/` startsidan, `/om-oss`, `/kom-igang` (förfrågan; `?typ=dagspass` eller `?typ=vantelista` förväljer ett val).
 Texter och kontaktuppgifter ändras i `src/data/content.js`.
 
+## Event och adminpanel
+
+Event och anmälningar ligger i Supabase och hanteras i adminpanelen på `/admin` (ingen länk i menyn).
+
+**Första gången:**
+1. Supabase → SQL Editor → klistra in hela `supabase/schema.sql` och kör.
+2. Supabase → Authentication → Users → Add user (e-post + lösenord, kryssa i *Auto Confirm User*). E-posten ska finnas i raden `insert into admins` längst ner i SQL-filen.
+3. Fyll i `VITE_SUPABASE_URL` och `VITE_SUPABASE_PUBLISHABLE_KEY` i `.env.local` (och i hostens miljövariabler vid publicering).
+4. Logga in på `/admin`. Är listan tom: tryck *Lägg in exempelevent*.
+
+**Så använder du panelen:**
+1. **Event:** *+ Nytt event*, *Redigera*, *Dölj/Publicera* eller *Radera*. Du kan ladda upp bild, skriva beskrivning, lägga till program och ange antal platser (0 = obegränsat).
+2. **Anmälningar:** se vilka som anmält sig, bekräfta, avboka eller ge en plats från väntelistan. Listan kan laddas ner som Excel-fil.
+3. Är ett event fullt hamnar nya anmälningar automatiskt på väntelistan. Kommande och tidigare event delas upp efter dagens datum.
+
+Eventanmälningar skickar inget mejl, de sparas bara i databasen. Går databasen inte att nå visar sajten exemplen i `src/data/events.js`.
+
 ## Publicera
 
 `public/_redirects` (Netlify) och `vercel.json` (Vercel) skickar alla adresser till `index.html`, så att direktlänkar som `/om-oss` fungerar.

@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 import { communityIntro, companies } from '../data/content'
 
 const AUTO_MS = 3000 // ungefär en logotyp var tredje sekund
@@ -8,13 +9,14 @@ const reducedMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)'
 
 const items = [
   ...companies.map((c) => ({ key: c.name, name: c.name, logo: c.logo, url: c.url })),
-  { key: 'cta', cta: true, name: 'Din logga här?', url: '#/kom-igang' },
+  { key: 'cta', cta: true, name: 'Din logga här?', url: '/kom-igang' },
 ]
 const N = items.length
 // Listan visas tre gånger efter varandra så att loopen aldrig hoppar.
 const slots = [0, 1, 2].flatMap((copy) => items.map((item, i) => ({ item, i, copy })))
 
 export default function Community() {
+  const navigate = useNavigate()
   const viewport = useRef(null)
   const track = useRef(null)
   const nodes = useRef([])
@@ -125,7 +127,7 @@ export default function Community() {
   const onItemClick = (item, i) => {
     if (s.current.justDragged) return
     if (item.cta && s.current.active === i) {
-      window.location.assign('#/kom-igang')
+      navigate('/kom-igang')
       return
     }
     centerOn(i)
@@ -223,15 +225,23 @@ export default function Community() {
       </div>
 
       <div className="carousel__link" aria-live="polite">
-        <a
-          key={current.key}
-          href={current.url}
-          {...(current.cta ? {} : { target: '_blank', rel: 'noopener noreferrer' })}
-          aria-label={current.cta ? 'Skicka förfrågan' : `Besök sidan – ${current.name}`}
-        >
-          {current.cta ? 'Hör av dig' : 'Besök sidan'}
-          <span className="carousel__circle" aria-hidden="true">→</span>
-        </a>
+        {current.cta ? (
+          <Link key={current.key} to={current.url} aria-label="Skicka förfrågan">
+            Hör av dig
+            <span className="carousel__circle" aria-hidden="true">→</span>
+          </Link>
+        ) : (
+          <a
+            key={current.key}
+            href={current.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`Besök sidan – ${current.name}`}
+          >
+            Besök sidan
+            <span className="carousel__circle" aria-hidden="true">→</span>
+          </a>
+        )}
       </div>
 
       <div className="carousel__dots">

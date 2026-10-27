@@ -222,10 +222,10 @@ export const nextStep = {
 // ---------------------------------------------------------------------------
 //     "to" = sidan, "hash" = sektionen på sidan (id).
 export const navLinks = [
-  { label: 'Om oss', to: '/om-oss' },
   { label: 'Arbetsplatser', to: '/', hash: 'arbetsplatser' },
   { label: 'Community', to: '/', hash: 'community' },
-  { label: 'En dag hos oss', to: '/', hash: 'en-dag' },
+  { label: 'Event', to: '/event' },
+  { label: 'Om oss', to: '/om-oss' },
   { label: 'Kontakt', to: '/', hash: 'kontakt' },
 ]
 

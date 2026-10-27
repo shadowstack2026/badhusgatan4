@@ -32,7 +32,7 @@ export default function Navbar({ solid = false }) {
 
   const close = () => setOpen(false)
   const cls = `nav${scrolled || solid ? ' nav--solid' : ''}${open ? ' nav--open' : ''}`
-  const isActive = (l) => (l.hash ? pathname === '/' && hash === `#${l.hash}` : pathname === l.to)
+  const isActive = (l) => (l.hash ? pathname === '/' && hash === `#${l.hash}` : pathname === l.to || pathname.startsWith(`${l.to}/`))
   const current = (l) => (isActive(l) ? 'page' : undefined)
 
   return (
