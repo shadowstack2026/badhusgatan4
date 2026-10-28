@@ -83,9 +83,9 @@ export default function EventSignup() {
           <p className="lead">
             {wait
               ? `Det blev fullt, så du står nu på väntelistan till ${ev.title}. Vi hör av oss om en plats blir ledig.`
-              : `Din anmälan till ${ev.title} är skickad. Vi bekräftar din plats via mejl.`}
+              : `Din anmälan till ${ev.title} är mottagen. Vi hör av oss via mejl till ${v.email.trim()} för att bekräfta din plats.`}
           </p>
-          <p className="request__notice">Din plats är inte bekräftad förrän vi har återkommit till dig.</p>
+          <p className="request__notice">Din plats är inte bekräftad förrän du har fått ett bekräftelsemejl från oss.</p>
           <Link to="/event" className="btn btn--primary">
             Till alla event <span className="btn__arrow" aria-hidden="true">→</span>
           </Link>
@@ -173,7 +173,9 @@ export default function EventSignup() {
           )}
 
           <div className="form-foot">
-            <p className="form-foot__note">Din plats är inte bekräftad förrän vi har återkommit till dig.</p>
+            <p className="form-foot__note">
+              Efter din anmälan hör vi av oss via mejl för att bekräfta din plats. Platsen är inte bekräftad förrän du fått det mejlet.
+            </p>
             <button type="submit" className="btn btn--primary" disabled={sending}>
               {sending ? (
                 'Skickar …'

@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Link, useLocation, useSearchParams } from 'react-router-dom'
 import emailjs from '@emailjs/browser'
 import { requestTexts, requestTypes, site, workspaces } from '../data/content'
+import { sendRequestReceipt } from '../lib/mail'
 import StatusLabel from './StatusLabel'
 
 const STORAGE_KEY = 'badhub-forfragningar'
@@ -110,7 +111,7 @@ function RequestForm({ preselect }) {
       await emailjs.send(env.VITE_EMAILJS_SERVICE_ID, env.VITE_EMAILJS_TEMPLATE_OWNER, templateParams, options)
       // Bekräftelsen till besökaren är sekundär: misslyckas den har ägaren ändå fått förfrågan.
       try {
-        await emailjs.send(env.VITE_EMAILJS_SERVICE_ID, env.VITE_EMAILJS_TEMPLATE_CONFIRM, templateParams, options)
+        await sendRequestReceipt({ to_email: email, to_name: values.namn.trim(), requestType })
       } catch (err) {
         console.error('Bekräftelsemejlet kunde inte skickas', err)
         confirmed = false

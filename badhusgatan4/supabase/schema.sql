@@ -156,6 +156,9 @@ create policy "event-images: admin skriver" on storage.objects
   for all using (bucket_id = 'event-images' and public.is_admin())
   with check (bucket_id = 'event-images' and public.is_admin());
 
+-- När bekräftelsemejlet skickades (lades till senare – körs säkert om och om igen)
+alter table public.registrations add column if not exists confirmed_at timestamptz;
+
 -- Din admin (byt e-post om du vill använda en annan) --------------------------------
 insert into public.admins (email) values ('shadowstack2026@gmail.com')
 on conflict do nothing;

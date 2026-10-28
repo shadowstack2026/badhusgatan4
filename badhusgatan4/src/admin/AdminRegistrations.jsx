@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { supabase } from '../lib/supabase'
+import { sendEventConfirmation } from '../lib/mail'
 
 const STATUS = { ny: 'Ny', bekraftad: 'Bekräftad', avbokad: 'Avbokad' }
 
@@ -7,6 +8,8 @@ const csvCell = (v) => `"${String(v ?? '').replace(/"/g, '""')}"`
 
 export default function AdminRegistrations({ events, regs, onChange }) {
   const [eventId, setEventId] = useState('alla')
+  const [busyId, setBusyId] = useState(null)
+  const [notice, setNotice] = useState(null)
 
   const titleOf = (id) => events.find((e) => e.id === id)?.title ?? '–'
   const list = regs.filter((r) => eventId === 'alla' || r.event_id === eventId)
@@ -14,6 +17,32 @@ export default function AdminRegistrations({ events, regs, onChange }) {
   const going = active.filter((r) => r.kind === 'anmalan').length
   const wait = active.filter((r) => r.kind === 'vantelista').length
   const picked = events.find((e) => e.id === eventId)
+
+  // Skickar bekräftelsemejlet och markerar anmälan som bekräftad först när mejlet gått iväg.
+  const confirmAndMail = async (r, { promoted = false } = {}) => {
+    const event = events.find((e) => e.id === r.event_id)
+    if (!event) return
+    setBusyId(r.id)
+    setNotice(null)
+    try {
+      await sendEventConfirmation({ reg: r, event, promoted })
+    } catch (err) {
+      console.error('Mejlet kunde inte skickas', err)
+      setBusyId(null)
+      return setNotice({ error: true, text: `Mejlet till ${r.email} kunde inte skickas. ${err.message || err.text || ''}` })
+    }
+    const { error } = await supabase
+      .from('registrations')
+      .update({ kind: 'anmalan', status: 'bekraftad', confirmed_at: new Date().toISOString() })
+      .eq('id', r.id)
+    setBusyId(null)
+    setNotice(
+      error
+        ? { error: true, text: `Mejlet skickades, men statusen kunde inte sparas: ${error.message}` }
+        : { text: `Bekräftelse skickad till ${r.email}.` },
+    )
+    onChange()
+  }
 
   const update = async (r, patch) => {
     await supabase.from('registrations').update(patch).eq('id', r.id)
@@ -64,6 +93,12 @@ export default function AdminRegistrations({ events, regs, onChange }) {
         </button>
       </div>
 
+      {notice && (
+        <div className={`notice${notice.error ? ' notice--error' : ''}`} role="status" style={{ marginBottom: 20 }}>
+          {notice.text}
+        </div>
+      )}
+
       <p className="admin__summary">
         {going}
         {picked && picked.spots_total > 0 ? ` av ${picked.spots_total}` : ''} anmälda
@@ -91,18 +126,26 @@ export default function AdminRegistrations({ events, regs, onChange }) {
                     {r.kind === 'vantelista' ? 'Väntelista' : 'Deltagare'}
                   </em>
                   <em className={`tag tag--${r.status}`}>{STATUS[r.status]}</em>
-                  <em className="tag">{new Date(r.created_at).toLocaleDateString('sv-SE')}</em>
+                  <em className="tag">Anmäld {new Date(r.created_at).toLocaleDateString('sv-SE')}</em>
+                  {r.confirmed_at && (
+                    <em className="tag tag--ok">Mejl skickat {new Date(r.confirmed_at).toLocaleDateString('sv-SE')}</em>
+                  )}
                 </span>
               </div>
               <div className="admin__actions">
                 {r.kind === 'vantelista' && r.status !== 'avbokad' && (
-                  <button type="button" className="btn btn--primary" onClick={() => update(r, { kind: 'anmalan', status: 'bekraftad' })}>
-                    Ge plats
+                  <button type="button" className="btn btn--primary" disabled={busyId === r.id} onClick={() => confirmAndMail(r, { promoted: true })}>
+                    {busyId === r.id ? 'Skickar …' : 'Ge plats och mejla'}
                   </button>
                 )}
                 {r.kind === 'anmalan' && r.status === 'ny' && (
-                  <button type="button" className="btn btn--primary" onClick={() => update(r, { status: 'bekraftad' })}>
-                    Bekräfta
+                  <button type="button" className="btn btn--primary" disabled={busyId === r.id} onClick={() => confirmAndMail(r)}>
+                    {busyId === r.id ? 'Skickar …' : 'Bekräfta och mejla'}
+                  </button>
+                )}
+                {r.kind === 'anmalan' && r.status === 'bekraftad' && (
+                  <button type="button" className="btn btn--ghost" disabled={busyId === r.id} onClick={() => confirmAndMail(r)}>
+                    {busyId === r.id ? 'Skickar …' : 'Mejla igen'}
                   </button>
                 )}
                 {r.status !== 'avbokad' ? (
