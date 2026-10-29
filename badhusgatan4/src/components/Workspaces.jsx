@@ -1,9 +1,11 @@
 import { Link } from 'react-router-dom'
-import { workspaces, workspacesIntro } from '../data/content'
+import { workspacesIntro } from '../data/content'
+import { useWorkspaces } from '../lib/spaces'
 import Reveal from './Reveal'
 import StatusLabel from './StatusLabel'
 
 export default function Workspaces() {
+  const workspaces = useWorkspaces()
   return (
     <section className="section section--dark" id="arbetsplatser">
       <div className="container">

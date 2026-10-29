@@ -1,8 +1,6 @@
 import { useCallback, useEffect, useState } from 'react'
 import { supabase } from '../lib/supabase'
-import { useEvents } from '../lib/EventsContext'
-import AdminEvents from './AdminEvents'
-import AdminRegistrations from './AdminRegistrations'
+import AdminPanel from './AdminPanel'
 
 // Adminpanelen på /admin. Inloggning sker med e-post och lösenord (Supabase Auth)
 // och bara adresser i tabellen "admins" får se eller ändra något.
@@ -38,7 +36,7 @@ export default function Admin() {
       </main>
     )
   }
-  return <Panel email={email} />
+  return <AdminPanel email={email} />
 }
 
 function Login() {
@@ -60,7 +58,7 @@ function Login() {
     <main className="request admin">
       <div className="container request__inner admin__login">
         <h1 className="h2">Admin</h1>
-        <p className="lead">Logga in för att hantera event och anmälningar.</p>
+        <p className="lead">Logga in för att hantera intresseanmälningar, platser och event.</p>
         <form onSubmit={submit} noValidate>
           <div className="field">
             <label htmlFor="a-email">E-post</label>
@@ -80,68 +78,3 @@ function Login() {
   )
 }
 
-function Panel({ email }) {
-  const [tab, setTab] = useState('event')
-  const { reload } = useEvents()
-  const [events, setEvents] = useState(null)
-  const [regs, setRegs] = useState([])
-  const [error, setError] = useState('')
-
-  // Hämtar allt (även dolda event) och uppdaterar publika sajten efteråt.
-  const load = useCallback(async () => {
-    const [ev, rg] = await Promise.all([
-      supabase.from('events').select('*').order('date', { ascending: false }),
-      supabase.from('registrations').select('*').order('created_at', { ascending: false }),
-    ])
-    if (ev.error || rg.error) {
-      setError('Kunde inte hämta data. Har du kört supabase/schema.sql i Supabase?')
-      setEvents([])
-      return
-    }
-    setError('')
-    setEvents(ev.data)
-    setRegs(rg.data)
-    reload()
-  }, [reload])
-
-  useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    load()
-  }, [load])
-
-  const waiting = regs.filter((r) => r.status === 'ny').length
-
-  return (
-    <main className="request admin">
-      <div className="container admin__inner">
-        <div className="admin__top">
-          <div>
-            <h1 className="h2">Admin</h1>
-            <p className="admin__who">Inloggad som {email}</p>
-          </div>
-          <button type="button" className="btn btn--ghost" onClick={() => supabase.auth.signOut()}>
-            Logga ut
-          </button>
-        </div>
-
-        <div className="admin__tabs" role="tablist">
-          <button type="button" role="tab" aria-selected={tab === 'event'} className={tab === 'event' ? 'is-active' : ''} onClick={() => setTab('event')}>
-            Event
-          </button>
-          <button type="button" role="tab" aria-selected={tab === 'anmalningar'} className={tab === 'anmalningar' ? 'is-active' : ''} onClick={() => setTab('anmalningar')}>
-            Anmälningar
-            {waiting > 0 && <span className="admin__badge">{waiting} nya</span>}
-          </button>
-        </div>
-
-        {error && <div className="notice notice--error">{error}</div>}
-        {events &&
-          (tab === 'event' ? (
-            <AdminEvents events={events} regs={regs} onChange={load} />
-          ) : (
-            <AdminRegistrations events={events} regs={regs} onChange={load} />
-          ))}
-      </div>
-    </main>
-  )
-}

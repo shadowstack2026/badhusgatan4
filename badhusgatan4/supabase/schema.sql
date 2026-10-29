@@ -162,3 +162,143 @@ alter table public.registrations add column if not exists confirmed_at timestamp
 -- Din admin (byt e-post om du vill använda en annan) --------------------------------
 insert into public.admins (email) values ('shadowstack2026@gmail.com')
 on conflict do nothing;
+
+-- ============================================================================
+--  CRM: platstyper, intresseanmälningar, medlemmar och historik
+--  (körs säkert om och om igen)
+-- ============================================================================
+
+-- Platstyper med antal platser. Du ändrar "capacity" i adminpanelen.
+create table if not exists public.space_types (
+  id         text primary key,
+  title      text not null,
+  capacity   integer not null default 0 check (capacity >= 0),
+  sort       integer not null default 0
+);
+alter table public.space_types enable row level security;
+
+drop policy if exists "space_types: läsa" on public.space_types;
+create policy "space_types: läsa" on public.space_types for select using (true);
+drop policy if exists "space_types: admin skriver" on public.space_types;
+create policy "space_types: admin skriver" on public.space_types
+  for all using (public.is_admin()) with check (public.is_admin());
+
+insert into public.space_types (id, title, capacity, sort) values
+  ('oppet-bord', 'Öppet bord', 10, 1),
+  ('fast-plats', 'Fast plats', 6, 2),
+  ('eget-rum',   'Eget rum',    1, 3)
+on conflict (id) do nothing;
+
+-- Intresseanmälningar (och "prova en dag" / "boka besök") ----------------------------
+create table if not exists public.leads (
+  id          uuid primary key default gen_random_uuid(),
+  space_type  text references public.space_types(id) on delete set null,
+  kind        text not null default 'intresse' check (kind in ('intresse', 'prova-dag', 'besok')),
+  name        text not null,
+  email       text not null,
+  phone       text not null default '',
+  company     text not null default '',
+  work        text not null default '',
+  start_date  text not null default '',
+  message     text not null default '',
+  status      text not null default 'ny' check (status in ('ny', 'kontaktad', 'godkand', 'ko', 'avbojd')),
+  notes       text not null default '',
+  created_at  timestamptz not null default now(),
+  approved_at timestamptz
+);
+create index if not exists leads_status_idx on public.leads (status, created_at);
+alter table public.leads enable row level security;
+drop policy if exists "leads: admin" on public.leads;
+create policy "leads: admin" on public.leads
+  for all using (public.is_admin()) with check (public.is_admin());
+
+-- Medlemmar: den som sitter på en plats just nu har ended_at = null ------------------
+create table if not exists public.members (
+  id         uuid primary key default gen_random_uuid(),
+  lead_id    uuid references public.leads(id) on delete set null,
+  space_type text not null references public.space_types(id),
+  name       text not null,
+  email      text not null default '',
+  phone      text not null default '',
+  company    text not null default '',
+  notes      text not null default '',
+  since      date not null default current_date,
+  ended_at   date
+);
+create index if not exists members_active_idx on public.members (space_type) where ended_at is null;
+alter table public.members enable row level security;
+drop policy if exists "members: admin" on public.members;
+create policy "members: admin" on public.members
+  for all using (public.is_admin()) with check (public.is_admin());
+
+-- Enkel historik ("Anna godkändes", "Erik sa upp sig") --------------------------------
+create table if not exists public.activity_log (
+  id         uuid primary key default gen_random_uuid(),
+  text       text not null,
+  created_at timestamptz not null default now()
+);
+alter table public.activity_log enable row level security;
+drop policy if exists "activity_log: admin" on public.activity_log;
+create policy "activity_log: admin" on public.activity_log
+  for all using (public.is_admin()) with check (public.is_admin());
+
+-- Antal upptagna / köade per typ (utan personuppgifter, syns för sajten) ---------------
+create or replace view public.space_counts as
+  select s.id,
+         s.capacity,
+         (select count(*) from public.members m where m.space_type = s.id and m.ended_at is null)::int as taken,
+         (select count(*) from public.leads l where l.space_type = s.id and l.status = 'ko')::int as queued
+  from public.space_types s;
+grant select on public.space_counts to anon, authenticated;
+
+-- Skicka intresseanmälan: hamnar i kö om platstypen är full -----------------------------
+create or replace function public.submit_lead(
+  p_space text,
+  p_kind text,
+  p_name text,
+  p_email text,
+  p_phone text default '',
+  p_company text default '',
+  p_work text default '',
+  p_start text default '',
+  p_message text default ''
+)
+returns text
+language plpgsql
+security definer
+set search_path = public
+as $$
+declare
+  st public.space_types%rowtype;
+  taken integer;
+  s text := 'ny';
+  sp text := nullif(p_space, '');
+begin
+  if length(trim(p_name)) = 0 or p_email !~* '^[^\s@]+@[^\s@]+\.[^\s@]{2,}$' then
+    raise exception 'invalid';
+  end if;
+  if p_kind not in ('intresse', 'prova-dag', 'besok') then raise exception 'invalid'; end if;
+
+  if sp is not null then
+    select * into st from public.space_types where id = sp for update;
+    if not found then raise exception 'invalid'; end if;
+    select count(*) into taken from public.members where space_type = sp and ended_at is null;
+    if taken >= st.capacity then s := 'ko'; end if;
+  end if;
+
+  -- Samma person som redan väntar på samma sak läggs inte till två gånger
+  if exists (
+    select 1 from public.leads
+    where lower(email) = lower(trim(p_email)) and space_type is not distinct from sp
+      and kind = p_kind and status in ('ny', 'kontaktad', 'ko')
+  ) then
+    return 'duplicate';
+  end if;
+
+  insert into public.leads (space_type, kind, name, email, phone, company, work, start_date, message, status)
+  values (sp, p_kind, trim(p_name), trim(p_email), trim(coalesce(p_phone, '')), trim(coalesce(p_company, '')),
+          trim(coalesce(p_work, '')), trim(coalesce(p_start, '')), trim(coalesce(p_message, '')), s);
+  return s;
+end;
+$$;
+grant execute on function public.submit_lead(text, text, text, text, text, text, text, text, text) to anon, authenticated;

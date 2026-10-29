@@ -1,17 +1,18 @@
 import { useState } from 'react'
 import { Link, useLocation, useSearchParams } from 'react-router-dom'
 import emailjs from '@emailjs/browser'
-import { requestTexts, requestTypes, site, workspaces } from '../data/content'
+import { requestTexts, requestTypes, site, workspaces as staticWorkspaces } from '../data/content'
 import { sendRequestReceipt } from '../lib/mail'
+import { supabase } from '../lib/supabase'
+import { useWorkspaces } from '../lib/spaces'
 import StatusLabel from './StatusLabel'
 
-const STORAGE_KEY = 'badhub-forfragningar'
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/
 
 const env = import.meta.env
 const mailto = `mailto:${site.email}`
 
-const statusFor = (type) =>
+const makeStatusFor = (workspaces) => (type) =>
   type?.platsId ? workspaces.find((w) => w.id === type.platsId)?.status : undefined
 
 // "?typ=dagspass" och "?typ=vantelista" kommer från knapparna på sidan.
@@ -19,7 +20,7 @@ const statusFor = (type) =>
 function initialType(preselect) {
   if (preselect === 'dagspass') return 'prova-dag'
   if (preselect === 'vantelista') {
-    return requestTypes.find((t) => statusFor(t) === 'fullt')?.id ?? ''
+    return requestTypes.find((t) => t.platsId && staticWorkspaces.find((w) => w.id === t.platsId)?.status === 'fullt')?.id ?? ''
   }
   return requestTypes.some((t) => t.id === preselect) ? preselect : ''
 }
@@ -60,6 +61,8 @@ function RequestForm({ preselect }) {
   const [sendFailed, setSendFailed] = useState(false)
   const [sent, setSent] = useState(null)
 
+  const workspaces = useWorkspaces()
+  const statusFor = makeStatusFor(workspaces)
   const selected = requestTypes.find((t) => t.id === values.typ)
   const isWaitlist = statusFor(selected) === 'fullt'
 
@@ -105,6 +108,28 @@ function RequestForm({ preselect }) {
 
     setSending(true)
     setSendFailed(false)
+
+    // 1. Spara i CRM:et (hamnar i kö automatiskt om platstypen är full).
+    let saved = false
+    try {
+      const { error } = await supabase.rpc('submit_lead', {
+        p_space: selected.platsId ?? '',
+        p_kind: selected.platsId ? 'intresse' : selected.id,
+        p_name: values.namn.trim(),
+        p_email: email,
+        p_phone: values.telefon.trim(),
+        p_company: values.foretag.trim(),
+        p_work: values.arbete.trim(),
+        p_start: values.startdatum,
+        p_message: values.meddelande.trim(),
+      })
+      if (error) throw error
+      saved = true
+    } catch (err) {
+      console.error('Förfrågan kunde inte sparas i CRM:et', err)
+    }
+
+    // 2. Mejla ägaren och bekräfta till besökaren. Räcker att en av dem lyckas.
     let confirmed = true
     try {
       const options = { publicKey: env.VITE_EMAILJS_PUBLIC_KEY }
@@ -117,29 +142,13 @@ function RequestForm({ preselect }) {
         confirmed = false
       }
     } catch (err) {
-      console.error('Förfrågan kunde inte skickas', err)
-      setSendFailed(true)
-      setSending(false)
-      return
-    }
-
-    try {
-      const record = {
-        typ: values.typ, // används för att se efterfrågan per platstyp
-        namn: values.namn,
-        epost: values.epost,
-        telefon: values.telefon,
-        foretag: values.foretag,
-        arbete: values.arbete,
-        startdatum: values.startdatum,
-        meddelande: values.meddelande,
-        art: isWaitlist ? 'vantelista' : 'forfragan',
-        skickad: new Date().toISOString(),
+      console.error('Förfrågan kunde inte mejlas', err)
+      if (!saved) {
+        setSendFailed(true)
+        setSending(false)
+        return
       }
-      const all = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]')
-      localStorage.setItem(STORAGE_KEY, JSON.stringify([...all, record]))
-    } catch {
-      /* localStorage kan vara avstängt – förfrågan är redan skickad */
+      confirmed = false
     }
 
     setSending(false)

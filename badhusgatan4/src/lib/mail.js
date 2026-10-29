@@ -45,6 +45,22 @@ export function sendEventConfirmation({ reg, event, promoted = false }) {
   )
 }
 
+// Mejl från CRM:et: "godkänd" (plats klar) och "plats ledig" (var i kö).
+export function sendLeadMail({ lead, spaceTitle, fromQueue = false }) {
+  const first = lead.name.trim().split(/\s+/)[0]
+  return sendVisitorMail({
+    to_email: lead.email,
+    to_name: lead.name,
+    subject: fromQueue ? `En plats har blivit ledig, ${first}!` : `Välkommen till Badhuset, ${first}!`,
+    heading: fromQueue ? 'Goda nyheter!' : 'Välkommen!',
+    intro: fromQueue
+      ? `En plats har blivit ledig och den är din: ${spaceTitle}.`
+      : `Din plats är klar: ${spaceTitle}. Vi hör av oss med praktisk information.`,
+    details: `Plats: ${spaceTitle}`,
+    note: 'Svara på det här mejlet om du har frågor.',
+  })
+}
+
 // Tack-mejl när någon skickat formuläret på /kom-igang.
 export function sendRequestReceipt({ to_email, to_name, requestType }) {
   const first = to_name.trim().split(/\s+/)[0]
