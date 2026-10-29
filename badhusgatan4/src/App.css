@@ -2768,3 +2768,84 @@
     display: none;
   }
 }
+
+/* Live-indikator */
+.crm__live {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 700;
+  color: #7f90b1;
+}
+.crm__live i {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #7f90b1;
+}
+.crm__live.is-on {
+  color: #86efac;
+}
+.crm__live.is-on i {
+  background: #22c55e;
+  box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.6);
+  animation: crm-pulse 2s infinite;
+}
+@keyframes crm-pulse {
+  70% {
+    box-shadow: 0 0 0 7px rgba(34, 197, 94, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(34, 197, 94, 0);
+  }
+}
+
+/* Fix: sidomenyn och knapparna ska inte flöda utanför sina rutor */
+.crm,
+.crm *,
+.crm *::before,
+.crm *::after {
+  box-sizing: border-box;
+}
+.crm__side {
+  overflow: hidden;
+}
+.crm__nav {
+  grid-template-columns: minmax(0, 1fr);
+}
+.crm__link span {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.crm__count {
+  flex: none;
+}
+
+/* Raka rader: lika breda knappar så att de ligger i kolumner, och centrerat i höjd */
+.crm .admin__actions {
+  align-items: center;
+  flex-wrap: nowrap;
+}
+.crm .admin__actions .btn {
+  min-width: 116px;
+  justify-content: center;
+  text-align: center;
+  white-space: nowrap;
+}
+.crm .admin__item {
+  align-items: center;
+}
+.crm .admin__bar {
+  align-items: center;
+}
+@media (max-width: 900px) {
+  .crm .admin__actions {
+    flex-wrap: wrap;
+  }
+}
+
+.crm .admin__item.crm__lead {
+  align-items: start;
+}

@@ -302,3 +302,21 @@ begin
 end;
 $$;
 grant execute on function public.submit_lead(text, text, text, text, text, text, text, text, text) to anon, authenticated;
+
+-- ============================================================================
+--  LIVE: adminpanelen uppdateras direkt när något ändras (Supabase Realtime)
+--  (körs säkert om och om igen)
+-- ============================================================================
+do $$
+declare t text;
+begin
+  foreach t in array array['leads', 'members', 'space_types', 'activity_log', 'events', 'registrations']
+  loop
+    if not exists (
+      select 1 from pg_publication_tables
+      where pubname = 'supabase_realtime' and schemaname = 'public' and tablename = t
+    ) then
+      execute format('alter publication supabase_realtime add table public.%I', t);
+    end if;
+  end loop;
+end $$;

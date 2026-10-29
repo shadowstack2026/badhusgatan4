@@ -56,6 +56,7 @@ export default function AdminPanel({ email }) {
   const { reload } = useEvents()
   const [data, setData] = useState(null)
   const [error, setError] = useState('')
+  const [live, setLive] = useState(false)
 
   // Hämtar allt (även dolda event) och uppdaterar publika sajten efteråt.
   const load = useCallback(async () => {
@@ -83,6 +84,36 @@ export default function AdminPanel({ email }) {
     load()
   }, [load])
 
+  // Live: när något ändras i databasen (ny anmälan, någon godkänns …) hämtas allt om.
+  // Flera ändringar i rad samlas ihop till en hämtning.
+  useEffect(() => {
+    let timer
+    const refresh = () => {
+      clearTimeout(timer)
+      timer = setTimeout(load, 300)
+    }
+    const channel = supabase.channel('crm-live')
+    for (const table of ['leads', 'members', 'space_types', 'activity_log', 'events', 'registrations']) {
+      channel.on('postgres_changes', { event: '*', schema: 'public', table }, refresh)
+    }
+    channel.subscribe((status) => setLive(status === 'SUBSCRIBED'))
+
+    // Reserv om Realtime inte är påslaget i Supabase: hämta om var 5:e sekund
+    // (bara när fliken syns) och direkt när du kommer tillbaka till fliken.
+    const poll = setInterval(() => {
+      if (!document.hidden) load()
+    }, 5000)
+    const onVisible = () => !document.hidden && load()
+    document.addEventListener('visibilitychange', onVisible)
+
+    return () => {
+      clearInterval(poll)
+      document.removeEventListener('visibilitychange', onVisible)
+      clearTimeout(timer)
+      supabase.removeChannel(channel)
+    }
+  }, [load])
+
   const badge = {
     intresse: data?.leads.filter((l) => l.status === 'ny').length,
     platser: data?.leads.filter((l) => l.status === 'ko').length,
@@ -91,7 +122,7 @@ export default function AdminPanel({ email }) {
   const current = TABS.find((t) => t.id === tab)
 
   return (
-    <div className="crm">
+    <div className="crm admin">
       <aside className="crm__side">
         <div className="crm__logo">badhuset</div>
         <nav className="crm__nav" aria-label="Meny">
@@ -104,6 +135,9 @@ export default function AdminPanel({ email }) {
           ))}
         </nav>
         <div className="crm__user">
+          <span className={`crm__live${live ? ' is-on' : ''}`} title={live ? 'Uppdateras direkt' : 'Ansluter …'}>
+            <i /> {live ? 'Live' : 'Ansluter …'}
+          </span>
           <a href="/" className="crm__site">
             ↗ Öppna sajten
           </a>
