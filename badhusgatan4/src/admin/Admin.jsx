@@ -21,14 +21,14 @@ export default function Admin() {
     return () => data.subscription.unsubscribe()
   }, [check])
 
-  if (state === 'loading') return <main className="request admin" />
+  if (state === 'loading') return <main className="crmlogin" />
   if (state === 'out') return <Login />
   if (state === 'denied') {
     return (
-      <main className="request admin">
-        <div className="container request__inner">
-          <h1 className="h2">Ingen behörighet</h1>
-          <p className="lead">{email} är inte registrerad som admin.</p>
+      <main className="crmlogin">
+        <div className="crmlogin__card">
+          <h1 className="crmlogin__title">Ingen behörighet</h1>
+          <p className="crmlogin__lead">{email} är inte registrerad som admin.</p>
           <button type="button" className="btn btn--ghost" onClick={() => supabase.auth.signOut()}>
             Logga ut
           </button>
@@ -55,10 +55,11 @@ function Login() {
   }
 
   return (
-    <main className="request admin">
-      <div className="container request__inner admin__login">
-        <h1 className="h2">Admin</h1>
-        <p className="lead">Logga in för att hantera intresseanmälningar, platser och event.</p>
+    <main className="crmlogin">
+      <div className="crmlogin__card">
+        <span className="crm__logo">badhuset</span>
+        <h1 className="crmlogin__title">Logga in</h1>
+        <p className="crmlogin__lead">Hantera intresseanmälningar, platser och event.</p>
         <form onSubmit={submit} noValidate>
           <div className="field">
             <label htmlFor="a-email">E-post</label>
@@ -73,6 +74,7 @@ function Login() {
             {busy ? 'Loggar in …' : 'Logga in'}
           </button>
         </form>
+        <a className="crmlogin__back" href="/">← Till sajten</a>
       </div>
     </main>
   )

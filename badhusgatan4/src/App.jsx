@@ -14,11 +14,13 @@ import NotFound from './pages/NotFound'
 
 export default function App() {
   const { pathname } = useLocation()
+  // CRM:et på /admin har egen layout, utan sajtens meny och sidfot.
+  const isAdmin = pathname.startsWith('/admin')
 
   return (
     <>
       <ScrollManager />
-      <Navbar solid={pathname !== '/'} />
+      {!isAdmin && <Navbar solid={pathname !== '/'} />}
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/om-oss" element={<OmOss />} />
@@ -29,7 +31,7 @@ export default function App() {
         <Route path="/kom-igang" element={<RequestPage />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
-      <Footer />
+      {!isAdmin && <Footer />}
     </>
   )
 }
