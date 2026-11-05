@@ -10,11 +10,11 @@ export default function NextStep() {
           <h2 className="h2">{nextStep.title}</h2>
           <p className="lead">{nextStep.text}</p>
           <div className="next__buttons">
-            <Link to="/kom-igang?typ=dagspass" className="btn btn--primary">
-              Boka ett gratis dagspass <span className="btn__arrow" aria-hidden="true">→</span>
+            <Link to="/kom-igang?typ=besok" className="btn btn--primary">
+              {nextStep.primaryCta} <span className="btn__arrow" aria-hidden="true">→</span>
             </Link>
-            <Link to="/kom-igang?typ=vantelista" className="btn btn--ghost">
-              Ställ mig i kö <span className="btn__arrow" aria-hidden="true">→</span>
+            <Link to="/kom-igang?typ=fast-plats" className="btn btn--ghost">
+              {nextStep.secondaryCta} <span className="btn__arrow" aria-hidden="true">→</span>
             </Link>
           </div>
           <p className="next__contact">

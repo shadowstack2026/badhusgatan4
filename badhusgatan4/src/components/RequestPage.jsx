@@ -219,10 +219,14 @@ function RequestForm({ preselect }) {
         </Link>
         <h1 className="h2">{requestTexts.title}</h1>
         <p className="lead">{requestTexts.intro}</p>
+        <aside className="request__aside">
+          <h2>{requestTexts.fastTitle}</h2>
+          <p>{requestTexts.fastText}</p>
+        </aside>
 
         <form onSubmit={onSubmit} noValidate>
           <fieldset className="types">
-            <legend>Vad vill du göra?</legend>
+            <legend>{requestTexts.legend}</legend>
             <div className="types__grid">
               {requestTypes.map((t) => {
                 const st = statusFor(t)
@@ -254,12 +258,10 @@ function RequestForm({ preselect }) {
           <div className="form-grid">
             {field('namn', 'Namn', { autoComplete: 'name' })}
             {field('epost', 'E-post', { type: 'email', autoComplete: 'email' })}
-            {field('telefon', 'Telefon', { type: 'tel', autoComplete: 'tel' }, true)}
             {field('foretag', 'Företag', { autoComplete: 'organization' }, true)}
-            {field('arbete', 'Vad jobbar du med?', {}, true)}
-            {field('startdatum', 'Önskat startdatum', { type: 'date' }, true)}
+            {field('telefon', 'Telefon', { type: 'tel', autoComplete: 'tel' }, true)}
           </div>
-          {field('meddelande', 'Meddelande', { as: 'textarea' }, values.typ !== 'besok')}
+          {field('meddelande', requestTexts.messageLabel, { as: 'textarea' }, values.typ !== 'besok')}
 
           {/* Honeypot: dolt för människor, botar fyller i det */}
           <div className="hp" aria-hidden="true">

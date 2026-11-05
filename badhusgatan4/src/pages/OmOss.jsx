@@ -43,6 +43,7 @@ export default function OmOss() {
         <div className="container">
           <Reveal>
             <h2 className="h2">{team.title}</h2>
+            <p className="lead">{team.text}</p>
           </Reveal>
           <ul className="aboutus__team">
             {team.people.map((p, i) => (
@@ -61,8 +62,8 @@ export default function OmOss() {
       <section className="section section--dark aboutus__cta">
         <div className="container">
           <Reveal>
-            <Link to="/kom-igang?typ=dagspass" className="btn btn--primary">
-              Prova en dag <span className="btn__arrow" aria-hidden="true">→</span>
+            <Link to="/kom-igang?typ=prova-dag" className="btn btn--primary">
+              Kom förbi på en kaffe <span className="btn__arrow" aria-hidden="true">→</span>
             </Link>
           </Reveal>
         </div>

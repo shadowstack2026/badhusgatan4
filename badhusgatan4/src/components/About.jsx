@@ -14,6 +14,13 @@ export default function About() {
           </div>
         </Reveal>
 
+        <Reveal className="about__intro about__intro--sub">
+          <h2 className="h2">{about.featuresTitle}</h2>
+          <div className="about__copy">
+            <p>{about.featuresText}</p>
+          </div>
+        </Reveal>
+
         <ul className="features">
           {about.features.map((f, i) => (
             <Reveal as="li" key={f.title} delay={i * 90} className="feature">

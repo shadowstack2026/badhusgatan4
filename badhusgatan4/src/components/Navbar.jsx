@@ -38,7 +38,7 @@ export default function Navbar({ solid = false }) {
   return (
     <header className={cls}>
       <div className="container nav__inner">
-        <Link to="/" className="nav__logo" onClick={close} aria-label="badhuset – startsidan">
+        <Link to="/" className="nav__logo" onClick={close} aria-label="Badhusgatan 4 – startsidan">
           <Logo />
         </Link>
 
@@ -50,8 +50,8 @@ export default function Navbar({ solid = false }) {
           ))}
         </nav>
 
-        <Link to="/kom-igang?typ=dagspass" className="btn btn--primary nav__cta">
-          Prova en dag <span className="btn__arrow" aria-hidden="true">→</span>
+        <Link to="/kom-igang?typ=besok" className="btn btn--primary nav__cta">
+          Boka ett besök <span className="btn__arrow" aria-hidden="true">→</span>
         </Link>
 
         <button
@@ -82,13 +82,13 @@ export default function Navbar({ solid = false }) {
             </Link>
           ))}
           <Link
-            to="/kom-igang?typ=dagspass"
+            to="/kom-igang?typ=besok"
             className="btn btn--primary"
             onClick={close}
             tabIndex={open ? 0 : -1}
             style={{ '--i': navLinks.length }}
           >
-            Prova en dag <span className="btn__arrow" aria-hidden="true">→</span>
+            Boka ett besök <span className="btn__arrow" aria-hidden="true">→</span>
           </Link>
         </nav>
       </div>

@@ -51,7 +51,7 @@ export function sendLeadMail({ lead, spaceTitle, fromQueue = false }) {
   return sendVisitorMail({
     to_email: lead.email,
     to_name: lead.name,
-    subject: fromQueue ? `En plats har blivit ledig, ${first}!` : `Välkommen till Badhuset, ${first}!`,
+    subject: fromQueue ? `En plats har blivit ledig, ${first}!` : `Välkommen till Badhusgatan 4, ${first}!`,
     heading: fromQueue ? 'Goda nyheter!' : 'Välkommen!',
     intro: fromQueue
       ? `En plats har blivit ledig och den är din: ${spaceTitle}.`

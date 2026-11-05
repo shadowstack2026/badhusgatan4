@@ -9,7 +9,7 @@ export const LEAD_STATUS = {
   avbojd: 'Avslagen',
 }
 
-export const KIND = { intresse: 'Intresse för plats', 'prova-dag': 'Prova en dag', besok: 'Boka besök' }
+export const KIND = { intresse: 'Intresse för plats', 'prova-dag': 'Kom förbi på en kaffe', besok: 'Boka besök' }
 
 export const sv = (d) => (d ? new Date(d).toLocaleDateString('sv-SE') : '–')
 

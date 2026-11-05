@@ -11,24 +11,23 @@ export default function Workspaces() {
       <div className="container">
         <Reveal className="section__head">
           <h2 className="h2">{workspacesIntro.title}</h2>
+          <p className="lead">{workspacesIntro.text}</p>
         </Reveal>
 
         <div className="cards">
           {workspaces.map((w, i) => {
-            const full = w.status === 'fullt'
             return (
               <Reveal as="article" key={w.id} delay={i * 100} className="wcard">
                 <div className="media wcard__media">
                   <img src={w.image} alt="" loading="lazy" />
-                  <span className="wcard__num">{w.number}</span>
                 </div>
                 <div className="wcard__body">
                   <h3>{w.title}</h3>
                   <p>{w.text}</p>
                   <div className="wcard__foot">
                     <StatusLabel status={w.status} />
-                    <Link to={`/kom-igang?typ=${w.id}`} className="link">
-                      {full ? 'Ställ dig i kö' : 'Visa intresse'}
+                    <Link to={`/${w.id}`} className="link">
+                      Läs mer
                       <span className="link__arrow" aria-hidden="true">→</span>
                     </Link>
                   </div>

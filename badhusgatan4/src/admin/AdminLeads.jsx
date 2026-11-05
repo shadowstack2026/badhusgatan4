@@ -95,7 +95,7 @@ export default function AdminLeads({ leads, spaces, members, onChange }) {
                   {s.title}
                 </option>
               ))}
-              <option value="prova-dag">Prova en dag</option>
+              <option value="prova-dag">Kom förbi på en kaffe</option>
               <option value="besok">Boka besök</option>
             </select>
           </div>

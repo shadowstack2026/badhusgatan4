@@ -13,10 +13,11 @@
 
   /* Typsnitt */
   --sans: 'Manrope', system-ui, 'Segoe UI', Roboto, sans-serif;
+  --display: 'Sora', 'Manrope', system-ui, sans-serif;
 
   /* Rytm */
   --gutter: clamp(20px, 5vw, 56px);
-  --section-y: clamp(88px, 12vw, 168px);
+  --section-y: clamp(72px, 9vw, 128px);
   --radius: 10px;
   --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
 
@@ -45,6 +46,12 @@ body {
   margin: 0;
   min-width: 320px;
   background: var(--navy);
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--display);
 }
 
 h1,

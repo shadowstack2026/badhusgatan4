@@ -31,7 +31,7 @@ export const generalStatus = 'fa' // TILLFÄLLIGT – välj "lediga", "fa" eller
 //  2. KONTAKTUPPGIFTER OCH ADRESS
 // ---------------------------------------------------------------------------
 export const site = {
-  name: 'badhuset', // arbetsnamn
+  name: 'Badhusgatan 4', // arbetsnamn
   address: 'Badhusgatan 4 · Helsingborg',
   email: 'hej@badhuset.example', // TILLFÄLLIGT
   phone: '000-000 00 00', // TILLFÄLLIGT
@@ -41,47 +41,53 @@ export const site = {
 //  3. STARTSIDANS RUBRIK OCH TEXTER
 // ---------------------------------------------------------------------------
 export const hero = {
-  title: 'Här landar digitala människor', // TILLFÄLLIGT
-  text: 'En digital hubb för små bolag, skarpa hjärnor och nya samarbeten.', // TILLFÄLLIGT
+  title: 'Lika gött som hemma. Fast med fler kollegor.',
+  text: 'Välkommen till Badhusgatan 4. Här skapar vi en digital hubb för startups, mindre IT-bolag och konsulter som vill ha en egen arbetsplats och ett schysst häng.',
+  // Knapparna under texten
+  primaryCta: 'Kom förbi på en kaffe',
+  secondaryCta: 'Hitta din plats',
 }
 
 // ---------------------------------------------------------------------------
 //  4. PLATSEN – vad som finns här
 // ---------------------------------------------------------------------------
 export const about = {
-  title: 'Mer verkstad än coworking.', // TILLFÄLLIGT
+  title: 'Egen plats. Gemensamma möjligheter.',
   paragraphs: [
-    // TILLFÄLLIGT
-    'Vi är inte ett stort coworkingföretag. Badhusgatan 4 är en mindre, nördig plats där man mellanlandar mellan uppdrag, idéer och kundmöten – och där någon alltid har tid att kika på det du håller på med.',
-    'Här sitter utvecklare, designers, marknadsförare och konsulter sida vid sida. Det ska vara prisvärt, lugnt att jobba och lätt att hitta nästa samarbete över en kopp kaffe.',
+    'Att driva eget behöver inte betyda att sitta själv. Här arbetar du med ditt företag, omgiven av andra som förstår vardagen och gärna delar med sig av sina erfarenheter.',
+    'Ett samtal vid skrivbordet kan ge ett nytt perspektiv. En stund tillsammans kan bli början på ett samarbete.',
   ],
-  // TILLFÄLLIGT – alla fyra bilder är tillfälliga Unsplash-bilder. Byt "image" mot egna bilder.
+  // TILLFÄLLIGT – bilderna är Unsplash-bilder. Byt "image" mot egna bilder.
   features: [
     {
-      title: 'Snabbt wifi & skärmar',
-      text: 'Stabil fiber och extra skärmar att låna när det blir tungt.',
+      title: 'Eget skrivbord',
+      text: 'En fast plats att landa vid varje arbetsdag. Internet ingår.',
       image:
         'https://images.unsplash.com/photo-1593062096033-9a26b09da705?auto=format&fit=crop&w=800&q=70',
     },
     {
-      title: 'Kaffe & fika',
-      text: 'Bryggkaffe, te och något sött. Alltid påslaget.',
-      image:
-        'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=800&q=70',
-    },
-    {
-      title: 'Mötesrum',
-      text: 'Ett rum för kundmöten och workshops när du behöver stänga dörren.',
+      title: 'Någon att bolla med',
+      text: 'En idé, ett uppdrag eller ett beslut – ett gott råd finns alltid nära.',
       image:
         'https://images.unsplash.com/photo-1517502884422-41eaead166d4?auto=format&fit=crop&w=800&q=70',
     },
     {
-      title: 'Månadsfrukost',
-      text: 'En gång i månaden äter vi frukost ihop och byter nyheter.',
+      title: 'Ett schysst häng',
+      text: 'Vi hälsar på varandra, hjälper till när vi kan och har roligt längs vägen.',
+      image:
+        'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=800&q=70',
+    },
+    {
+      title: 'Arbetsro',
+      text: 'Fokus när du behöver det, sällskap när du vill ha det.',
       image:
         'https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=800&q=70',
     },
   ],
+  // Rubrik och text som visas ovanför de fyra korten
+  featuresTitle: 'Ett kontor att längta till.',
+  featuresText:
+    'Vi vill skapa en plats där det känns gött att kliva in genom dörren. Här hör arbetsro, gemenskap och företagande ihop.',
 }
 
 // ---------------------------------------------------------------------------
@@ -91,16 +97,19 @@ export const about = {
 //     Inga priser på sidan – texten under korten säger "Hör av dig för pris".
 // ---------------------------------------------------------------------------
 export const workspacesIntro = {
-  title: 'Hitta platsen som passar ditt sätt att jobba.',
-  note: 'Hör av dig för pris och visning.',
+  title: 'Ett eget skrivbord. Ett sammanhang att trivas i.',
+  text: 'Letar du efter en fast arbetsplats i Helsingborg? På Badhusgatan 4 får du en egen plats att landa vid och människor från andra digitala företag omkring dig.',
+  note: 'Internet och förbrukningsartiklar till toaletten ingår i hyran. Kontakta oss för aktuellt pris, villkor och information om lediga platser.',
 }
 
 export const workspaces = [
   {
     id: 'oppet-bord', // används i länkar – ändra inte
-    number: '01',
+    // Sidan /oppet-bord – fyll i när texten och bilderna är klara (lämna tomt tills dess)
+    details: [], // beskrivning: en text per stycke, t.ex. ['Första stycket.', 'Andra stycket.']
+    photos: [], // bilder: lägg in sökvägar eller länkar, t.ex. ['/bilder/oppet-bord-1.jpg']
     title: 'Öppet bord',
-    text: 'Sätt dig där det finns plats. Flexibelt för dig som kommer några dagar i veckan.', // TILLFÄLLIGT
+    text: 'Sätt dig där det finns plats. Flexibelt för dig som kommer några dagar i veckan.', // TILLFÄLLIGT – finns inte i textunderlaget
     status: 'lediga', // <-- ÄNDRA HÄR: "lediga", "fa" eller "fullt"
     // TILLFÄLLIGT bild
     image:
@@ -108,18 +117,22 @@ export const workspaces = [
   },
   {
     id: 'fast-plats',
-    number: '02',
+    // Sidan /fast-plats – fyll i när texten och bilderna är klara (lämna tomt tills dess)
+    details: [], // beskrivning: en text per stycke, t.ex. ['Första stycket.', 'Andra stycket.']
+    photos: [], // bilder: lägg in sökvägar eller länkar, t.ex. ['/bilder/oppet-bord-1.jpg']
     title: 'Fast plats',
-    text: 'Ditt eget skrivbord som alltid väntar. Lämna kvar skärm och kaffemugg.', // TILLFÄLLIGT
+    text: 'Ditt eget skrivbord att komma till varje arbetsdag. Här bygger du din verksamhet och är samtidigt en del av gemenskapen.',
     status: 'fa', // <-- ÄNDRA HÄR
     image:
       'https://images.unsplash.com/photo-1497215728101-856f4ea42174?auto=format&fit=crop&w=900&q=70',
   },
   {
     id: 'eget-rum',
-    number: '03',
+    // Sidan /eget-rum – fyll i när texten och bilderna är klara (lämna tomt tills dess)
+    details: [], // beskrivning: en text per stycke, t.ex. ['Första stycket.', 'Andra stycket.']
+    photos: [], // bilder: lägg in sökvägar eller länkar, t.ex. ['/bilder/oppet-bord-1.jpg']
     title: 'Eget rum',
-    text: 'Ett litet rum med dörr för dig eller teamet som vill ha mer ro.', // TILLFÄLLIGT
+    text: 'Ett litet rum med dörr för dig eller teamet som vill ha mer ro.', // TILLFÄLLIGT – finns inte i textunderlaget
     status: 'fullt', // <-- ÄNDRA HÄR
     image:
       'https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=900&q=70',
@@ -135,8 +148,8 @@ export const workspaces = [
 //       url  = länk till företagets hemsida (öppnas i ny flik)
 // ---------------------------------------------------------------------------
 export const communityIntro = {
-  title: 'Vilka som sitter här.',
-  text: 'Små bolag och ensamföretagare som jobbar digitalt.',
+  title: 'Företagen är olika. Vardagen delar vi.',
+  text: 'På Badhusgatan 4 samlas människor med olika erfarenheter och kunskaper inom det digitala. Snart presenterar vi människorna och företagen som gör platsen till vad den är. Vill du bli en del av gänget?',
 }
 
 // TILLFÄLLIGT – alla företag och logotyper nedan är exempel
@@ -195,17 +208,16 @@ export const testimonials = [
 // ---------------------------------------------------------------------------
 export const day = {
   title: 'Fokus. Folk. Fika.',
-  intro: 'Lugn nog för att jobba. Levande nog för att vilja komma tillbaka.', // TILLFÄLLIGT
+  intro: 'Arbetsro när du behöver den. Sällskap när du vill ha det.',
   // TILLFÄLLIGT bild från lokalen
   image:
     'https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=1000&q=70',
-  // TILLFÄLLIGT
+  // TILLFÄLLIGT – exempel på en dag, byt mot hur dagen faktiskt ser ut
   items: [
-    { time: '09:00', title: 'Kaffe & lugn start', text: 'Dörren öppnar. Kaffet är redan bryggt och ingen har bråttom.' },
-    { time: '10–12', title: 'Fokustid', text: 'Hörlurar på, mejlen får vänta. Tyst arbetsro i hela lokalen.' },
-    { time: '12:00', title: 'Lunch tillsammans', text: 'Vi äter ihop, ibland ute, ibland vid långbordet.' },
-    { time: '15:00', title: 'Fika', text: 'Veckan summeras med något gott och prat om det som hänt.' },
-    { time: 'Första fredagen', title: 'Månadsfrukost', text: 'En gång i månaden äter vi frukost ihop och delar nyheter.' },
+    { time: '09:00', title: 'God morgon', text: 'Man hälsar, tar en kaffe och landar vid sitt skrivbord.' },
+    { time: '10–12', title: 'Fokustid', text: 'Hörlurar på och full koncentration på det egna.' },
+    { time: '12:00', title: 'Lunch', text: 'Ofta blir det en stund tillsammans och några nya perspektiv.' },
+    { time: '15:00', title: 'Bolla en idé', text: 'Ett samtal vid skrivbordet kan ge en ny väg framåt.' },
   ],
 }
 
@@ -213,8 +225,10 @@ export const day = {
 //  9. NÄSTA STEG
 // ---------------------------------------------------------------------------
 export const nextStep = {
-  title: 'Testa skrivbordet innan du bestämmer dig.',
-  text: 'Kom förbi ett gratis dagspass, ta en kopp kaffe och känn efter om det här är din plats.', // TILLFÄLLIGT
+  title: 'Vi börjar med en kaffe.',
+  text: 'Det bästa sättet att lära känna en plats är att komma dit. Kom förbi, kika på lokalen och berätta lite om dig och ditt företag.',
+  primaryCta: 'Boka ett besök',
+  secondaryCta: 'Kontakta Frank',
 }
 
 // ---------------------------------------------------------------------------
@@ -235,16 +249,20 @@ export const navLinks = [
 //     med (t.ex. "Fullt just nu" -> väntelista). Valen utan platsId har ingen status.
 // ---------------------------------------------------------------------------
 export const requestTypes = [
-  { id: 'prova-dag', title: 'Prova en dag gratis', text: 'Ett dagspass utan förpliktelser.', platsId: null },
+  { id: 'prova-dag', title: 'Kom förbi på en kaffe', text: 'Titta in, ta en kopp och prata om vad du söker.', platsId: null },
   { id: 'oppet-bord', title: 'Öppet bord', text: 'Flexibel plats i det gemensamma.', platsId: 'oppet-bord' },
   { id: 'fast-plats', title: 'Fast plats', text: 'Ett eget skrivbord.', platsId: 'fast-plats' },
   { id: 'eget-rum', title: 'Eget rum', text: 'Rum med dörr.', platsId: 'eget-rum' },
-  { id: 'besok', title: 'Boka ett besök', text: 'Kom och titta på lokalen.', platsId: null },
+  { id: 'besok', title: 'Boka ett besök', text: 'Kika på lokalen och få en rundvisning.', platsId: null },
 ]
 
 export const requestTexts = {
-  title: 'Kom igång hos oss',
-  intro: 'Berätta lite om dig och vad du letar efter. Vi svarar inom två arbetsdagar.',
+  title: 'Vi börjar med en kaffe.',
+  intro: 'Det bästa sättet att lära känna en plats är att komma dit. Kom förbi, kika på lokalen och berätta lite om dig och ditt företag. Vi visar dig runt och pratar om vad du söker i en arbetsplats.',
+  fastTitle: 'Nyfiken på en fast plats?',
+  fastText: 'Kontakta Frank för att höra mer om lokalen, lediga platser och hur det fungerar att sitta här. Du hittar oss på Badhusgatan 4 i Helsingborg.',
+  legend: 'Vad är du nyfiken på?',
+  messageLabel: 'Berätta gärna lite om dig och vad du söker.',
   waitlistNotice:
     'Det är fullt just nu – ställ dig på väntelistan så hör vi av oss när en plats blir ledig.',
   disclaimer:
@@ -259,29 +277,27 @@ export const requestTexts = {
 //  12. OM OSS – sidan /om-oss
 // ---------------------------------------------------------------------------
 export const aboutUs = {
-  // TILLFÄLLIGT
   hero: {
-    title: 'En mötesplats för digitala människor',
-    text: 'Badhuset är ett mindre, nördigt community för små bolag, frilansare och distansarbetare. Här mellanlandar man, hjälper varandra och hittar nya samarbeten.',
+    title: 'Nära till människor. Nära till möjligheter.',
+    text: 'Idén bakom Badhusgatan 4 är enkel: att samla människor inom det digitala och skapa en vardag där vi kan hjälpa varandra framåt. Startups och mindre bolag behöver ofta någon att bolla med – en idé, en utmaning i ett uppdrag eller ett beslut som blir lättare efter ett samtal. Här ska samarbete och ett gott råd alltid finnas inom en armlängds avstånd.',
   },
   why: {
-    title: 'Varför Badhuset?', // TILLFÄLLIGT
+    title: 'Alla har något att bidra med.',
     paragraphs: [
-      // TILLFÄLLIGT
-      'Förr var badhuset stadens sociala mötesplats – dit gick man för att röra sig, vila och träffa grannarna. Ingen behövde boka något, man dök bara upp.',
-      'Vi gör samma sak för det digitala: en plats där man kommer för arbetsron och stannar för människorna.',
+      'Du kanske precis har startat ditt företag eller har många års erfarenhet. Oavsett vilket har du kunskaper, tankar och perspektiv som kan vara värdefulla för någon annan.',
+      'Vi tror på en gemenskap där det känns naturligt att fråga, dela med sig och koppla ihop människor.',
     ],
   },
-  // TILLFÄLLIGT
   values: [
-    { title: 'Människorna först', text: 'Det är människorna vi möts av varje dag som gör platsen.' },
-    { title: 'Vi hjälper varandra framåt', text: 'Någon har alltid tid att kika på det du håller på med.' },
-    { title: 'Arbetsro och gemenskap', text: 'Lugnt nog att fokusera, levande nog att vilja komma tillbaka.' },
+    { title: 'Bolla med någon', text: 'En idé eller ett beslut blir lättare med någon att prata med.' },
+    { title: 'Dela med dig', text: 'Nybörjare eller veteran – alla har något som är värdefullt för någon annan.' },
+    { title: 'Ta hänsyn', text: 'En avslappnad stämning där alla bidrar till trivseln och får vara sig själva.' },
   ],
   team: {
-    title: 'Vilka som driver platsen', // TILLFÄLLIGT
+    title: 'Schyssta människor gör platsen.',
+    text: 'För oss handlar ett bra kontor lika mycket om människorna som om lokalen. Ett schysst häng där vi också får saker gjorda.',
     people: [
-      // TILLFÄLLIGT – namn, roller och bilder är exempel
+      // TILLFÄLLIGT – namn, roller och bilder är exempel. Byt mot era riktiga.
       {
         name: 'Anna Svensson',
         role: 'Grundare & värd',

@@ -7,12 +7,12 @@ export default function Footer() {
     <footer className="footer">
       <div className="container footer__inner">
         <div className="footer__brand">
-          <Link to="/" aria-label="badhuset – startsidan">
+          <Link to="/" aria-label="Badhusgatan 4 – startsidan">
             <Logo />
           </Link>
-          <p className="footer__tagline">Här landar digitala människor.</p>
-          <Link to="/kom-igang?typ=dagspass" className="btn btn--primary footer__cta">
-            Prova en dag <span className="btn__arrow" aria-hidden="true">→</span>
+          <p className="footer__tagline">Lika gött som hemma. Fast med fler kollegor.</p>
+          <Link to="/kom-igang?typ=besok" className="btn btn--primary footer__cta">
+            Boka ett besök <span className="btn__arrow" aria-hidden="true">→</span>
           </Link>
         </div>
 
