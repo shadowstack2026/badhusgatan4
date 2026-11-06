@@ -1,23 +1,24 @@
 import Hero from '../components/Hero'
-import About from '../components/About'
-import Workspaces from '../components/Workspaces'
 import Community from '../components/Community'
+import Spaces from '../components/Spaces'
+import Facilities from '../components/Facilities'
+import Location from '../components/Location'
+import Workspaces from '../components/Workspaces'
 import UpcomingEvents from '../components/UpcomingEvents'
-import Testimonials from '../components/Testimonials'
-import Day from '../components/Day'
-import NextStep from '../components/NextStep'
+import Contact from '../components/Contact'
+import { SHOW_AVAILABILITY } from '../config'
 
 export default function Home() {
   return (
     <main>
       <Hero />
-      <About />
-      <Workspaces />
       <Community />
+      <Spaces />
+      <Facilities />
+      <Location />
+      {SHOW_AVAILABILITY && <Workspaces />}
       <UpcomingEvents />
-      <Testimonials />
-      <Day />
-      <NextStep />
+      <Contact />
     </main>
   )
 }

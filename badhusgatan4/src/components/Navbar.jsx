@@ -1,7 +1,13 @@
 import { useEffect, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
-import { navLinks } from '../data/content'
+import { navLinks as allLinks } from '../data/content'
+import { SHOW_AVAILABILITY } from '../config'
 import Logo from './Logo'
+
+const navLinks = allLinks.filter((l) => SHOW_AVAILABILITY || !l.availability)
+const cta = SHOW_AVAILABILITY
+  ? { to: '/kontakt?typ=besok', label: 'Boka ett besök' }
+  : { to: '/kontakt?typ=prova-dag', label: 'Kom förbi' }
 
 const target = (l) => ({ pathname: l.to, hash: l.hash ? `#${l.hash}` : '' })
 
@@ -50,8 +56,8 @@ export default function Navbar({ solid = false }) {
           ))}
         </nav>
 
-        <Link to="/kom-igang?typ=besok" className="btn btn--primary nav__cta">
-          Boka ett besök <span className="btn__arrow" aria-hidden="true">→</span>
+        <Link to={cta.to} className="btn btn--primary nav__cta">
+          {cta.label} <span className="btn__arrow" aria-hidden="true">→</span>
         </Link>
 
         <button
@@ -82,13 +88,13 @@ export default function Navbar({ solid = false }) {
             </Link>
           ))}
           <Link
-            to="/kom-igang?typ=besok"
+            to={cta.to}
             className="btn btn--primary"
             onClick={close}
             tabIndex={open ? 0 : -1}
             style={{ '--i': navLinks.length }}
           >
-            Boka ett besök <span className="btn__arrow" aria-hidden="true">→</span>
+            {cta.label} <span className="btn__arrow" aria-hidden="true">→</span>
           </Link>
         </nav>
       </div>

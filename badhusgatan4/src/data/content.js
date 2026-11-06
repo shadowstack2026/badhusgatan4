@@ -15,6 +15,8 @@
 //     "fullt"    -> Fullt just nu    (grå prick)
 // ============================================================================
 
+import { CONTACT_EMAIL } from '../config'
+
 // ---------------------------------------------------------------------------
 //  1. STATUS – namn och färger (ändras sällan)
 // ---------------------------------------------------------------------------
@@ -33,7 +35,7 @@ export const generalStatus = 'fa' // TILLFÄLLIGT – välj "lediga", "fa" eller
 export const site = {
   name: 'Badhusgatan 4', // arbetsnamn
   address: 'Badhusgatan 4 · Helsingborg',
-  email: 'hej@badhuset.example', // TILLFÄLLIGT
+  email: CONTACT_EMAIL, // ändras i src/config.js
   phone: '000-000 00 00', // TILLFÄLLIGT
 }
 
@@ -42,10 +44,11 @@ export const site = {
 // ---------------------------------------------------------------------------
 export const hero = {
   title: 'Lika gött som hemma. Fast med fler kollegor.',
-  text: 'Välkommen till Badhusgatan 4. Här skapar vi en digital hubb för startups, mindre IT-bolag och konsulter som vill ha en egen arbetsplats och ett schysst häng.',
+  text: 'Badhusgatan 4 är ett hus i Helsingborg för folk som bygger digitala saker. Här hälsar man, bollar idéer och hjälper varandra framåt.',
   // Knapparna under texten
   primaryCta: 'Kom förbi på en kaffe',
-  secondaryCta: 'Hitta din plats',
+  secondaryCta: 'Så är det hos oss', // visas när SHOW_AVAILABILITY är false
+  secondaryCtaOpen: 'Hitta din plats', // visas när SHOW_AVAILABILITY är true
 }
 
 // ---------------------------------------------------------------------------
@@ -67,9 +70,8 @@ export const about = {
     },
     {
       title: 'Någon att bolla med',
-      text: 'En idé, ett uppdrag eller ett beslut – ett gott råd finns alltid nära.',
-      image:
-        'https://images.unsplash.com/photo-1517502884422-41eaead166d4?auto=format&fit=crop&w=800&q=70',
+      text: 'En idé, ett uppdrag eller ett beslut. Ett gott råd finns alltid nära.',
+      image: '/bilder/bolla-med.jpg',
     },
     {
       title: 'Ett schysst häng',
@@ -148,9 +150,46 @@ export const workspaces = [
 //       url  = länk till företagets hemsida (öppnas i ny flik)
 // ---------------------------------------------------------------------------
 export const communityIntro = {
-  title: 'Företagen är olika. Vardagen delar vi.',
-  text: 'På Badhusgatan 4 samlas människor med olika erfarenheter och kunskaper inom det digitala. Snart presenterar vi människorna och företagen som gör platsen till vad den är. Vill du bli en del av gänget?',
+  title: 'Ett hus där folk som bygger saker faktiskt hälsar på varandra.',
+  text: 'Badhusgatan 4 samlar startups, IT-bolag och konsulter i Helsingborg. Vi delar vardagen, erfarenheterna och en och annan kaffe.',
 }
+
+// De tre punkterna under rubriken
+export const communityPoints = [
+  { title: 'Man hälsar', text: 'Här känner man igen ansiktena. Man säger hej, tar en kaffe och frågar hur det går.', image: 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=800&q=70' }, // TILLFÄLLIGT bild
+  { title: 'Man bollar', text: 'En idé, en klurig kund eller ett beslut. Någon i huset har oftast stått där förut.', image: 'https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&w=800&q=70' }, // TILLFÄLLIGT bild
+  { title: 'Man bygger ihop', text: 'Ett samtal vid skrivbordet kan bli ett samarbete. Det händer oftare än man tror.', image: 'https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&w=800&q=70' }, // TILLFÄLLIGT bild
+]
+
+// ---------------------------------------------------------------------------
+//  YTOR – så här ser det ut hos oss (inga priser, inga antal platser)
+//  TILLFÄLLIGT – beskrivningar och bilder är exempel. Byt mot egna.
+// ---------------------------------------------------------------------------
+export const spacesIntro = {
+  title: 'Det här har vi.',
+  text: 'Några av ytorna där vardagen i huset utspelar sig.',
+}
+
+export const spaces = [
+  {
+    id: 'trappan',
+    title: 'Trappan',
+    text: 'Husets naturliga mötesplats. Här stannar man till och hamnar i samtal.',
+    image: 'https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=900&q=70',
+  },
+  {
+    id: 'open-space',
+    title: 'Open space',
+    text: 'Den gemensamma arbetsytan där fokus och sorl får samsas.',
+    image: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=900&q=70',
+  },
+  {
+    id: 'ginni',
+    title: 'Ginni',
+    text: 'Ett rum för möten och samtal när man vill sitta ifred en stund.',
+    image: 'https://images.unsplash.com/photo-1497215728101-856f4ea42174?auto=format&fit=crop&w=900&q=70',
+  },
+]
 
 // TILLFÄLLIGT – alla företag och logotyper nedan är exempel
 export const companies = [
@@ -224,6 +263,15 @@ export const day = {
 // ---------------------------------------------------------------------------
 //  9. NÄSTA STEG
 // ---------------------------------------------------------------------------
+// Visas när SHOW_AVAILABILITY är false (huset är fullt)
+export const nextStepClosed = {
+  title: 'Är du intresserad? Hör gärna av dig.',
+  text: 'Berätta lite om dig och vad du bygger på så hör vi av oss.',
+  primaryCta: 'Hör av dig',
+  secondaryCta: 'Kom förbi på en kaffe',
+}
+
+// Visas när SHOW_AVAILABILITY är true
 export const nextStep = {
   title: 'Vi börjar med en kaffe.',
   text: 'Det bästa sättet att lära känna en plats är att komma dit. Kom förbi, kika på lokalen och berätta lite om dig och ditt företag.',
@@ -236,7 +284,7 @@ export const nextStep = {
 // ---------------------------------------------------------------------------
 //     "to" = sidan, "hash" = sektionen på sidan (id).
 export const navLinks = [
-  { label: 'Arbetsplatser', to: '/', hash: 'arbetsplatser' },
+  { label: 'Arbetsplatser', to: '/', hash: 'arbetsplatser', availability: true }, // visas bara när SHOW_AVAILABILITY är true
   { label: 'Community', to: '/', hash: 'community' },
   { label: 'Event', to: '/event' },
   { label: 'Om oss', to: '/om-oss' },
@@ -256,6 +304,22 @@ export const requestTypes = [
   { id: 'besok', title: 'Boka ett besök', text: 'Kika på lokalen och få en rundvisning.', platsId: null },
 ]
 
+// Valen i formuläret när SHOW_AVAILABILITY är false
+export const requestTypesClosed = [
+  { id: 'intresse', title: 'Jag är intresserad', text: 'Berätta lite om dig så hör vi av oss.', platsId: null },
+  { id: 'prova-dag', title: 'Kom förbi på en kaffe', text: 'Titta in, ta en kopp och se hur det är hos oss.', platsId: null },
+  { id: 'besok', title: 'Boka ett besök', text: 'Kika på lokalen och få en rundvisning.', platsId: null },
+]
+
+// Ersätter texterna i requestTexts när SHOW_AVAILABILITY är false
+export const requestTextsClosed = {
+  title: 'Hör av dig.',
+  intro: 'Är du nyfiken på huset, vill komma förbi på en kaffe eller bara se hur det är hos oss? Berätta lite om dig så hör vi av oss.',
+  fastTitle: 'Är du intresserad?',
+  fastText: 'Hör gärna av dig så berättar vi mer. Du hittar oss på Badhusgatan 4 i Helsingborg.',
+  disclaimer: 'En förfrågan är inte en bekräftad bokning. Vi hör av oss för att bekräfta.',
+}
+
 export const requestTexts = {
   title: 'Vi börjar med en kaffe.',
   intro: 'Det bästa sättet att lära känna en plats är att komma dit. Kom förbi, kika på lokalen och berätta lite om dig och ditt företag. Vi visar dig runt och pratar om vad du söker i en arbetsplats.',
@@ -264,13 +328,13 @@ export const requestTexts = {
   legend: 'Vad är du nyfiken på?',
   messageLabel: 'Berätta gärna lite om dig och vad du söker.',
   waitlistNotice:
-    'Det är fullt just nu – ställ dig på väntelistan så hör vi av oss när en plats blir ledig.',
+    'Det är fullt just nu. Ställ dig på väntelistan så hör vi av oss när en plats blir ledig.',
   disclaimer:
     'En förfrågan eller plats på väntelistan är inte en bekräftad bokning. Vi hör av oss för att bekräfta.',
   thanksTitle: 'Tack! Vi hör av oss inom två arbetsdagar.',
   consent: 'Jag godkänner att mina uppgifter används för att svara på min förfrågan.',
   notBooking: 'Observera att detta inte är en bekräftad bokning.',
-  sendError: 'Något gick fel när förfrågan skulle skickas. Dina uppgifter finns kvar – försök igen om en stund.',
+  sendError: 'Något gick fel när förfrågan skulle skickas. Dina uppgifter finns kvar, försök igen om en stund.',
 }
 
 // ---------------------------------------------------------------------------
@@ -279,7 +343,7 @@ export const requestTexts = {
 export const aboutUs = {
   hero: {
     title: 'Nära till människor. Nära till möjligheter.',
-    text: 'Idén bakom Badhusgatan 4 är enkel: att samla människor inom det digitala och skapa en vardag där vi kan hjälpa varandra framåt. Startups och mindre bolag behöver ofta någon att bolla med – en idé, en utmaning i ett uppdrag eller ett beslut som blir lättare efter ett samtal. Här ska samarbete och ett gott råd alltid finnas inom en armlängds avstånd.',
+    text: 'Idén bakom Badhusgatan 4 är enkel: att samla människor inom det digitala och skapa en vardag där vi kan hjälpa varandra framåt. Startups och mindre bolag behöver ofta någon att bolla med, till exempel en idé, en utmaning i ett uppdrag eller ett beslut som blir lättare efter ett samtal. Här ska samarbete och ett gott råd alltid finnas inom en armlängds avstånd.',
   },
   why: {
     title: 'Alla har något att bidra med.',
@@ -290,7 +354,7 @@ export const aboutUs = {
   },
   values: [
     { title: 'Bolla med någon', text: 'En idé eller ett beslut blir lättare med någon att prata med.' },
-    { title: 'Dela med dig', text: 'Nybörjare eller veteran – alla har något som är värdefullt för någon annan.' },
+    { title: 'Dela med dig', text: 'Nybörjare eller veteran, alla har något som är värdefullt för någon annan.' },
     { title: 'Ta hänsyn', text: 'En avslappnad stämning där alla bidrar till trivseln och får vara sig själva.' },
   ],
   team: {
@@ -310,4 +374,56 @@ export const aboutUs = {
       },
     ],
   },
+}
+
+// ---------------------------------------------------------------------------
+//  KONTAKT – sektionen längst ner på startsidan
+// ---------------------------------------------------------------------------
+export const contact = {
+  // Visas när SHOW_AVAILABILITY är false (huset är fullt)
+  title: 'Är du intresserad? Hör gärna av dig.',
+  titleOpen: 'Vill du bli en del av huset?',
+  text: 'Skriv några rader så hör vi av oss.',
+  image: '/bilder/bolla-med.jpg',
+  imageAlt: 'Två fåtöljer och ett litet bord i ett av husets samtalsrum',
+  messageLabel: 'Vad bygger du på?',
+  submit: 'Skicka',
+  directLabel: 'Eller mejla direkt:',
+  success: 'Tack, vi hör av oss.',
+  successText: 'Vi har fått ditt meddelande och svarar så snart vi kan.',
+  error: 'Något gick fel när meddelandet skulle skickas. Dina uppgifter finns kvar. Försök igen om en stund eller mejla oss direkt.',
+}
+
+// ---------------------------------------------------------------------------
+//  FACILITETER – vad som finns i huset (sektionen "Faciliteter")
+//  TILLFÄLLIGT – kontrollera att alla punkter stämmer, lägg till eller ta bort rader.
+//  "image" = liten bild på kortet (Unsplash-bilder är tillfälliga, byt mot egna foton).
+// ---------------------------------------------------------------------------
+export const facilities = {
+  title: 'Faciliteter',
+  text: 'Det här finns i huset.',
+  items: [
+    { title: 'Eget skrivbord', image: 'https://images.unsplash.com/photo-1593062096033-9a26b09da705?auto=format&fit=crop&w=500&q=70', text: 'En fast plats att landa vid varje arbetsdag.' },
+    { title: 'Internet', image: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=500&q=70', text: 'Ingår i hyran.' },
+    { title: 'Open space', image: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=500&q=70', text: 'Den gemensamma arbetsytan där fokus och sorl samsas.' },
+    { title: 'Trappan', image: 'https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=500&q=70', text: 'Husets mötesplats, där samtalen börjar.' },
+    { title: 'Ginni', image: 'https://images.unsplash.com/photo-1497215728101-856f4ea42174?auto=format&fit=crop&w=500&q=70', text: 'Ett rum för möten och samtal.' },
+    { title: 'Samtalsrummet', image: '/bilder/bolla-med.jpg', text: 'Två fåtöljer när man vill prata ifred.' },
+    { title: 'Kaffe och te', image: 'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=500&q=70', text: 'Alltid påslaget.' },
+    { title: 'Toalettartiklar', image: 'https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?auto=format&fit=crop&w=500&q=70', text: 'Förbrukningsartiklar ingår i hyran.' },
+  ],
+}
+
+// ---------------------------------------------------------------------------
+//  HITTA HIT – sektionen med karta
+//  mapQuery = det som söks på Google Maps (kartan och knappen använder det)
+// ---------------------------------------------------------------------------
+export const location = {
+  title: 'Hitta hit',
+  label: 'Adress',
+  address: 'Badhusgatan 4, Helsingborg',
+  mapQuery: 'Badhusgatan 4, Helsingborg',
+  // TILLFÄLLIGT – kontrollera att raderna stämmer eller byt mot egna
+  facts: ['Centralt i Helsingborg', 'Nära till Helsingborg C', 'Kom förbi på en kaffe, dörren är öppen'],
+  button: 'Visa på Google Maps',
 }

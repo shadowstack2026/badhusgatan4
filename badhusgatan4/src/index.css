@@ -13,6 +13,7 @@
 
   /* Typsnitt */
   --sans: 'Manrope', system-ui, 'Segoe UI', Roboto, sans-serif;
+  --mono: 'JetBrains Mono', ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
   --display: 'Sora', 'Manrope', system-ui, sans-serif;
 
   /* Rytm */

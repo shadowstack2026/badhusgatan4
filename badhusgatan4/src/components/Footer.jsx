@@ -1,6 +1,9 @@
 import { Link } from 'react-router-dom'
-import { navLinks, site } from '../data/content'
+import { navLinks as allLinks, site } from '../data/content'
+import { SHOW_AVAILABILITY } from '../config'
 import Logo from './Logo'
+
+const navLinks = allLinks.filter((l) => SHOW_AVAILABILITY || !l.availability)
 
 export default function Footer() {
   return (
@@ -11,8 +14,8 @@ export default function Footer() {
             <Logo />
           </Link>
           <p className="footer__tagline">Lika gött som hemma. Fast med fler kollegor.</p>
-          <Link to="/kom-igang?typ=besok" className="btn btn--primary footer__cta">
-            Boka ett besök <span className="btn__arrow" aria-hidden="true">→</span>
+          <Link to="/kontakt?typ=prova-dag" className="btn btn--primary footer__cta">
+            Kom förbi på en kaffe <span className="btn__arrow" aria-hidden="true">→</span>
           </Link>
         </div>
 

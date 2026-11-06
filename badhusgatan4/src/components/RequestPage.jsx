@@ -1,11 +1,22 @@
 import { useState } from 'react'
 import { Link, useLocation, useSearchParams } from 'react-router-dom'
 import emailjs from '@emailjs/browser'
-import { requestTexts, requestTypes, site, workspaces as staticWorkspaces } from '../data/content'
+import {
+  requestTexts as openTexts,
+  requestTextsClosed,
+  requestTypes as openTypes,
+  requestTypesClosed,
+  site,
+  workspaces as staticWorkspaces,
+} from '../data/content'
+import { SHOW_AVAILABILITY } from '../config'
 import { sendRequestReceipt } from '../lib/mail'
 import { supabase } from '../lib/supabase'
 import { useWorkspaces } from '../lib/spaces'
 import StatusLabel from './StatusLabel'
+
+const requestTypes = SHOW_AVAILABILITY ? openTypes : requestTypesClosed
+const requestTexts = SHOW_AVAILABILITY ? openTexts : { ...openTexts, ...requestTextsClosed }
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/
 
@@ -30,7 +41,7 @@ function validate(v) {
   if (!v.typ) e.typ = 'Välj vad du vill göra så vet vi vad vi ska återkomma om.'
   if (!v.namn.trim()) e.namn = 'Skriv ditt namn så vet vi vem vi pratar med.'
   if (!v.epost.trim()) e.epost = 'Vi behöver din e-postadress för att kunna svara.'
-  else if (!EMAIL_RE.test(v.epost.trim())) e.epost = 'E-postadressen ser inte riktig ut – kolla att den är rätt skriven.'
+  else if (!EMAIL_RE.test(v.epost.trim())) e.epost = 'E-postadressen ser inte riktig ut. Kolla att den är rätt skriven.'
   if (v.typ === 'besok' && !v.meddelande.trim()) e.meddelande = 'Skriv gärna ett par rader om vad du vill se, så vi kan förbereda besöket.'
   if (!v.samtycke) e.samtycke = 'Du behöver godkänna detta för att vi ska kunna svara på din förfrågan.'
   return e

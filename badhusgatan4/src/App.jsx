@@ -11,6 +11,8 @@ import EventDetail from './pages/EventDetail'
 import EventSignup from './pages/EventSignup'
 import Admin from './admin/Admin'
 import WorkspaceDetail from './pages/WorkspaceDetail'
+import Ytor from './pages/Ytor'
+import { SHOW_AVAILABILITY } from './config'
 import NotFound from './pages/NotFound'
 
 export default function App() {
@@ -28,10 +30,16 @@ export default function App() {
         <Route path="/event" element={<Events />} />
         <Route path="/event/:slug" element={<EventDetail />} />
         <Route path="/event/:slug/anmal" element={<EventSignup />} />
-        <Route path="/oppet-bord" element={<WorkspaceDetail id="oppet-bord" />} />
-        <Route path="/fast-plats" element={<WorkspaceDetail id="fast-plats" />} />
-        <Route path="/eget-rum" element={<WorkspaceDetail id="eget-rum" />} />
+        <Route path="/ytor" element={<Ytor />} />
+        {SHOW_AVAILABILITY && (
+          <>
+            <Route path="/oppet-bord" element={<WorkspaceDetail id="oppet-bord" />} />
+            <Route path="/fast-plats" element={<WorkspaceDetail id="fast-plats" />} />
+            <Route path="/eget-rum" element={<WorkspaceDetail id="eget-rum" />} />
+          </>
+        )}
         <Route path="/admin" element={<Admin />} />
+        <Route path="/kontakt" element={<RequestPage />} />
         <Route path="/kom-igang" element={<RequestPage />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
