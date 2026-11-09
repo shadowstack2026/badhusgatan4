@@ -37,6 +37,7 @@ export const site = {
   address: 'Badhusgatan 4 · Helsingborg',
   email: CONTACT_EMAIL, // ändras i src/config.js
   phone: '000-000 00 00', // TILLFÄLLIGT
+  orgNr: '000000-0000', // TILLFÄLLIGT – organisationsnummer, visas i sidfoten
 }
 
 // ---------------------------------------------------------------------------
@@ -150,8 +151,8 @@ export const workspaces = [
 //       url  = länk till företagets hemsida (öppnas i ny flik)
 // ---------------------------------------------------------------------------
 export const communityIntro = {
-  title: 'Ett hus där folk som bygger saker faktiskt hälsar på varandra.',
-  text: 'Badhusgatan 4 samlar startups, IT-bolag och konsulter i Helsingborg. Vi delar vardagen, erfarenheterna och en och annan kaffe.',
+  title: 'Ett ekosystem för dem som bygger digitalt.',
+  text: 'Badhusgatan 4 finns för att man inte ska behöva bygga ensam. Här delar bolagen vardag, erfarenheter och kontakter, så att en idé, en kund eller ett beslut får fler ögon. Tillsammans blir huset ett ekosystem där bolagen växer med varandra.',
 }
 
 // De tre punkterna under rubriken
@@ -191,15 +192,7 @@ export const spaces = [
   },
 ]
 
-// TILLFÄLLIGT – alla företag och logotyper nedan är exempel
-export const companies = [
-  { name: 'Nordlys Studio', logo: '/logos/nordlys-studio.svg', url: 'https://example.com' }, // TILLFÄLLIGT
-  { name: 'Kvarnen Data', logo: '/logos/kvarnen-data.svg', url: 'https://example.com' }, // TILLFÄLLIGT
-  { name: 'Fjord & Frisk', logo: '/logos/fjord-frisk.svg', url: 'https://example.com' }, // TILLFÄLLIGT
-  { name: 'Lilla Konsulten', logo: '/logos/lilla-konsulten.svg', url: 'https://example.com' }, // TILLFÄLLIGT
-  { name: 'Pixelverket', logo: '/logos/pixelverket.svg', url: 'https://example.com' }, // TILLFÄLLIGT
-  { name: 'Brygga Digital', logo: '/logos/brygga-digital.svg', url: 'https://example.com' }, // TILLFÄLLIGT
-]
+// Bolagen i ekosystemet ligger i src/data/ecosystem.js
 
 // ---------------------------------------------------------------------------
 //  7. KUNDRÖSTER
@@ -285,7 +278,7 @@ export const nextStep = {
 //     "to" = sidan, "hash" = sektionen på sidan (id).
 export const navLinks = [
   { label: 'Arbetsplatser', to: '/', hash: 'arbetsplatser', availability: true }, // visas bara när SHOW_AVAILABILITY är true
-  { label: 'Community', to: '/', hash: 'community' },
+  { label: 'Ekosystemet', to: '/', hash: 'bolag' },
   { label: 'Event', to: '/event' },
   { label: 'Om oss', to: '/om-oss' },
   { label: 'Kontakt', to: '/', hash: 'kontakt' },
@@ -392,26 +385,6 @@ export const contact = {
   success: 'Tack, vi hör av oss.',
   successText: 'Vi har fått ditt meddelande och svarar så snart vi kan.',
   error: 'Något gick fel när meddelandet skulle skickas. Dina uppgifter finns kvar. Försök igen om en stund eller mejla oss direkt.',
-}
-
-// ---------------------------------------------------------------------------
-//  FACILITETER – vad som finns i huset (sektionen "Faciliteter")
-//  TILLFÄLLIGT – kontrollera att alla punkter stämmer, lägg till eller ta bort rader.
-//  "image" = liten bild på kortet (Unsplash-bilder är tillfälliga, byt mot egna foton).
-// ---------------------------------------------------------------------------
-export const facilities = {
-  title: 'Faciliteter',
-  text: 'Det här finns i huset.',
-  items: [
-    { title: 'Eget skrivbord', image: 'https://images.unsplash.com/photo-1593062096033-9a26b09da705?auto=format&fit=crop&w=500&q=70', text: 'En fast plats att landa vid varje arbetsdag.' },
-    { title: 'Internet', image: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=500&q=70', text: 'Ingår i hyran.' },
-    { title: 'Open space', image: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=500&q=70', text: 'Den gemensamma arbetsytan där fokus och sorl samsas.' },
-    { title: 'Trappan', image: 'https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=500&q=70', text: 'Husets mötesplats, där samtalen börjar.' },
-    { title: 'Ginni', image: 'https://images.unsplash.com/photo-1497215728101-856f4ea42174?auto=format&fit=crop&w=500&q=70', text: 'Ett rum för möten och samtal.' },
-    { title: 'Samtalsrummet', image: '/bilder/bolla-med.jpg', text: 'Två fåtöljer när man vill prata ifred.' },
-    { title: 'Kaffe och te', image: 'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=500&q=70', text: 'Alltid påslaget.' },
-    { title: 'Toalettartiklar', image: 'https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?auto=format&fit=crop&w=500&q=70', text: 'Förbrukningsartiklar ingår i hyran.' },
-  ],
 }
 
 // ---------------------------------------------------------------------------

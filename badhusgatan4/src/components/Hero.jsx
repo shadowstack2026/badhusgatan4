@@ -17,7 +17,7 @@ export default function Hero() {
             {hero.primaryCta} <span className="btn__arrow" aria-hidden="true">→</span>
           </Link>
           <Link
-            to={{ pathname: '/', hash: SHOW_AVAILABILITY ? '#arbetsplatser' : '#community' }}
+            to={{ pathname: '/', hash: SHOW_AVAILABILITY ? '#arbetsplatser' : '#huset' }}
             className="btn btn--outline-light"
           >
             {SHOW_AVAILABILITY ? hero.secondaryCtaOpen : hero.secondaryCta}

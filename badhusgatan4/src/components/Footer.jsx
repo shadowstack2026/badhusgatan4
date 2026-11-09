@@ -36,7 +36,7 @@ export default function Footer() {
         </div>
       </div>
       <div className="container footer__bottom">
-        <span>© {new Date().getFullYear()} {site.name}</span>
+        <span>© {new Date().getFullYear()} {site.name} · Org.nr {site.orgNr}</span>
         <button type="button" className="footer__top" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
           Till toppen <span aria-hidden="true">↑</span>
         </button>

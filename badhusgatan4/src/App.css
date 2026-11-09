@@ -4204,3 +4204,862 @@
     transition: none;
   }
 }
+
+/* =========================================================================
+   "Det här har vi": pinnad scroll-sektion (dator) / staplade kort (mobil)
+   ========================================================================= */
+.house {
+  position: relative;
+  color: var(--light);
+  background-color: #08162f;
+  background-image: radial-gradient(rgba(148, 163, 184, 0.12) 1px, transparent 1px);
+  background-size: 28px 28px;
+  border-top: 1px solid var(--line-dark);
+}
+.house__pin {
+  display: none;
+}
+
+.house__label {
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.02em;
+  color: #7fb0ff;
+}
+.house__count {
+  font-family: var(--mono);
+  font-size: 0.9rem;
+  color: var(--light);
+  white-space: nowrap;
+}
+.house__count span {
+  color: var(--muted);
+}
+
+/* ---- mobil och minskad rörelse: kort ---- */
+.house__cards {
+  padding: 0 var(--gutter) clamp(56px, 10vw, 96px);
+}
+.house__topbar {
+  position: sticky;
+  top: 64px;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-inline: calc(var(--gutter) * -1);
+  padding: 12px var(--gutter);
+  background: rgba(8, 22, 47, 0.94);
+  border-bottom: 1px solid rgba(96, 165, 250, 0.2);
+}
+.house__dots {
+  display: flex;
+}
+.house__dots button {
+  position: relative;
+  width: 22px;
+  height: 28px;
+}
+.house__dots button::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 6px;
+  height: 6px;
+  margin: -3px 0 0 -3px;
+  border-radius: 3px;
+  background: rgba(148, 163, 184, 0.5);
+  transition:
+    width 0.35s ease-out,
+    margin 0.35s ease-out,
+    background-color 0.35s;
+}
+.house__dots button.is-active::before {
+  width: 18px;
+  margin-left: -9px;
+  background: #60a5fa;
+}
+.hcard {
+  margin-top: clamp(36px, 9vw, 64px);
+}
+.hcard__img {
+  position: relative;
+  height: 60vh;
+  min-height: 340px;
+  max-height: 560px;
+  margin: 0 0 20px;
+  overflow: hidden;
+  border-radius: 14px;
+  background: var(--navy-2);
+}
+.hcard__img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.hcard__img::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(8, 22, 47, 0) 55%, rgba(8, 22, 47, 0.7) 100%),
+    linear-gradient(160deg, rgba(37, 99, 235, 0.18), rgba(8, 22, 47, 0.2));
+  pointer-events: none;
+}
+.hcard__title {
+  margin-top: 8px;
+  font-size: clamp(1.8rem, 7vw, 2.4rem);
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+.hcard__text {
+  margin-top: 10px;
+  max-width: 42ch;
+  color: rgba(248, 250, 252, 0.78);
+}
+
+/* ---- dator: pinnad ---- */
+@media (min-width: 901px) and (prefers-reduced-motion: no-preference) {
+  .house {
+    height: calc((var(--n) + 1) * 100vh);
+  }
+  .house__cards {
+    display: none;
+  }
+  .house__pin {
+    display: block;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow: hidden;
+    isolation: isolate;
+  }
+  /* en enda dämpad glow bakom bilden */
+  .house__pin::before {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    width: 760px;
+    height: 760px;
+    right: -120px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: radial-gradient(circle, rgba(59, 130, 246, 0.2) 0%, rgba(59, 130, 246, 0) 62%);
+    pointer-events: none;
+  }
+  .house__stage {
+    height: 100%;
+    display: grid;
+    grid-template-columns: 4fr 6fr;
+    gap: clamp(32px, 5vw, 80px);
+    padding-top: 92px;
+    padding-bottom: 40px;
+  }
+  .house__left {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 24px;
+    min-height: 0;
+  }
+
+  .house__index {
+    display: grid;
+    gap: 0;
+  }
+  .house__index button {
+    position: relative;
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+    width: 100%;
+    padding: 5px 0 5px 16px;
+    text-align: left;
+    font-family: var(--display);
+    font-size: clamp(0.95rem, 2.1vh, 1.1rem);
+    font-weight: 500;
+    color: rgba(148, 163, 184, 0.75);
+    transition:
+      color 0.45s ease-out,
+      font-size 0.45s ease-out,
+      transform 0.35s ease-out;
+  }
+  .house__index button::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    width: 3px;
+    height: 0;
+    background: #3b82f6;
+    border-radius: 2px;
+    transform: translateY(-50%);
+    transition: height 0.45s ease-out;
+  }
+  .house__index button:hover {
+    transform: translateX(6px);
+    color: rgba(226, 232, 240, 0.95);
+  }
+  .house__index button.is-active {
+    color: #fff;
+    font-size: clamp(1.25rem, 3.2vh, 1.8rem);
+    font-weight: 600;
+  }
+  .house__index button.is-active::before {
+    height: 1.1em;
+  }
+  .house__index button:focus-visible {
+    outline: 2px solid #60a5fa;
+    outline-offset: 2px;
+  }
+  .house__num {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    font-weight: 400;
+    color: rgba(148, 163, 184, 0.6);
+    min-width: 1.6em;
+    transition: color 0.45s;
+  }
+  .house__index button.is-active .house__num {
+    color: #60a5fa;
+  }
+
+  .house__detail {
+    padding-top: 22px;
+    border-top: 1px solid rgba(96, 165, 250, 0.22);
+  }
+  .house__detail .house__label {
+    animation: houseFade 0.45s ease-out both;
+  }
+  .house__mask {
+    overflow: hidden;
+    margin-top: 10px;
+    padding-bottom: 0.1em;
+  }
+  .house__title {
+    font-size: clamp(2.2rem, 6.4vh, 3.9rem);
+    font-weight: 600;
+    line-height: 1.05;
+    letter-spacing: -0.025em;
+    animation: houseSlide 0.55s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+  }
+  .house__text {
+    margin-top: 12px;
+    max-width: 36ch;
+    color: rgba(248, 250, 252, 0.8);
+    animation: houseUp 0.5s ease-out 0.15s both;
+  }
+
+  .house__right {
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+  }
+  .house__meta {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    margin-bottom: 14px;
+  }
+  .house__bar {
+    position: relative;
+    flex: 1;
+    height: 1px;
+    background: rgba(96, 165, 250, 0.25);
+  }
+  .house__bar span {
+    position: absolute;
+    inset: -0.5px 0;
+    background: #60a5fa;
+    transform-origin: left;
+  }
+  .house__roller {
+    display: inline-block;
+    overflow: hidden;
+    height: 1.25em;
+    vertical-align: bottom;
+  }
+  .house__roll {
+    display: inline-block;
+    animation: houseRoll 0.45s ease-out both;
+  }
+
+  .house__frame {
+    position: relative;
+    flex: 1;
+    min-height: 0;
+    margin: 0;
+  }
+  .house__imgs {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    border-radius: 16px;
+    background: var(--navy-2);
+  }
+  .house__img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transform: scale(1.08);
+    transition:
+      opacity 0.6s ease-out,
+      transform 1.2s ease-out;
+  }
+  .house__img.is-active {
+    opacity: 1;
+    transform: scale(1);
+  }
+  /* samma kalla ton över alla bilder + mörk botten */
+  .house__imgs::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(180deg, rgba(8, 22, 47, 0) 50%, rgba(8, 22, 47, 0.72) 100%),
+      linear-gradient(160deg, rgba(37, 99, 235, 0.18), rgba(8, 22, 47, 0.22));
+    pointer-events: none;
+  }
+  .house__frame::before,
+  .house__frame::after {
+    content: '';
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    border: 1px solid rgba(96, 165, 250, 0.75);
+    pointer-events: none;
+    z-index: 2;
+  }
+  .house__frame::before {
+    top: -8px;
+    left: -8px;
+    border-right: 0;
+    border-bottom: 0;
+  }
+  .house__frame::after {
+    right: -8px;
+    bottom: -8px;
+    border-left: 0;
+    border-top: 0;
+  }
+}
+
+@keyframes houseSlide {
+  from {
+    transform: translateY(105%);
+  }
+  to {
+    transform: none;
+  }
+}
+@keyframes houseUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes houseFade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes houseRoll {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: none;
+  }
+}
+
+/* "Det här har vi": rensa knappar och gör indexet till en ren lista */
+.house button {
+  background: none;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+.hcard__title {
+  margin-top: 0;
+}
+
+@media (min-width: 901px) and (prefers-reduced-motion: no-preference) {
+  .house__left {
+    justify-content: center;
+    gap: clamp(28px, 6vh, 56px);
+  }
+  .house__index {
+    border-top: 1px solid rgba(96, 165, 250, 0.16);
+  }
+  .house__index li {
+    border-bottom: 1px solid rgba(96, 165, 250, 0.16);
+  }
+  .house__index button {
+    align-items: center;
+    padding: clamp(8px, 1.7vh, 14px) 0 clamp(8px, 1.7vh, 14px) 18px;
+    font-size: clamp(1rem, 2.3vh, 1.2rem);
+  }
+  .house__index button.is-active {
+    font-size: clamp(1rem, 2.3vh, 1.2rem);
+    font-weight: 600;
+  }
+  .house__index button.is-active::before {
+    height: 60%;
+  }
+  .house__detail {
+    padding-top: 0;
+    border-top: 0;
+  }
+  .house__title {
+    font-size: clamp(2.2rem, 6vh, 3.6rem);
+  }
+  .house__text {
+    max-width: 40ch;
+    font-size: clamp(1rem, 2.2vh, 1.12rem);
+    line-height: 1.6;
+  }
+}
+
+/* Index: ikoner i stället för siffror, inga streck */
+@media (min-width: 901px) and (prefers-reduced-motion: no-preference) {
+  .house__index {
+    border-top: 0;
+    display: grid;
+    gap: 4px;
+  }
+  .house__index li {
+    border-bottom: 0;
+  }
+  .house__index button {
+    gap: 16px;
+    padding: clamp(9px, 1.7vh, 13px) 16px;
+    border-radius: 10px;
+    transition:
+      color 0.4s ease-out,
+      background-color 0.4s ease-out,
+      transform 0.35s ease-out;
+  }
+  .house__index button::before {
+    display: none;
+  }
+  .house__index button.is-active {
+    background: rgba(59, 130, 246, 0.12);
+    box-shadow: inset 0 0 0 1px rgba(96, 165, 250, 0.28);
+  }
+  .house__ico {
+    flex: none;
+    color: rgba(148, 163, 184, 0.7);
+    transition: color 0.4s ease-out;
+  }
+  .house__index button:hover .house__ico {
+    color: #bfdbfe;
+  }
+  .house__index button.is-active .house__ico {
+    color: #60a5fa;
+  }
+}
+
+/* Inga hörnmarkeringar på bilden */
+.house__frame::before,
+.house__frame::after {
+  display: none;
+}
+
+/* =========================================================================
+   Runda 8: "Varför finns det här", Bolag i ekosystemet, Event hos oss
+   ========================================================================= */
+.cm__grid {
+  min-height: 0;
+}
+.cm__values {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(20px, 3vw, 40px);
+  margin-top: clamp(40px, 5vw, 64px);
+  padding-top: 24px;
+  border-top: 1px solid rgba(30, 58, 138, 0.22);
+}
+.cm__values h3 {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: #1e3a8a;
+}
+.cm__values p {
+  margin-top: 6px;
+  font-size: 0.95rem;
+  color: var(--muted-dark);
+  max-width: 34ch;
+}
+@media (max-width: 760px) {
+  .cm__values {
+    grid-template-columns: 1fr;
+    gap: 22px;
+  }
+}
+
+/* Bolag i ekosystemet */
+.eco {
+  padding-bottom: clamp(56px, 7vw, 96px);
+  overflow: hidden;
+}
+.eco__head {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(20px, 5vw, 80px);
+  align-items: end;
+  margin-bottom: clamp(32px, 4.5vw, 56px);
+}
+.eco__head .lead {
+  margin-top: 0;
+}
+.marq {
+  border-block: 1px solid var(--line-light);
+  background: #fff;
+}
+.marq__window {
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+}
+.marq__track {
+  display: flex;
+  width: max-content;
+  animation: marqScroll 42s linear infinite;
+}
+.marq:hover .marq__track,
+.marq:focus-within .marq__track {
+  animation-play-state: paused;
+}
+.marq__row {
+  display: flex;
+  align-items: center;
+  flex: none;
+}
+.marq__row li {
+  padding: 30px clamp(32px, 5vw, 72px);
+}
+.marq__row a {
+  display: block;
+  border-radius: 6px;
+}
+.marq__row a:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 6px;
+}
+/* loggorna är vita i filen: gör dem marinblå på den ljusa bakgrunden */
+.marq__row img {
+  height: 34px;
+  width: auto;
+  filter: brightness(0) saturate(100%);
+  opacity: 0.55;
+  transition: opacity 0.3s;
+}
+.marq__row a:hover img,
+.marq__row a:focus-visible img {
+  opacity: 1;
+}
+@keyframes marqScroll {
+  to {
+    transform: translateX(-50%);
+  }
+}
+@media (max-width: 900px) {
+  .eco__head {
+    grid-template-columns: 1fr;
+    align-items: start;
+  }
+}
+@media (max-width: 700px) {
+  .marq__window {
+    overflow-x: auto;
+    scroll-snap-type: x proximity;
+    scrollbar-width: none;
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+  .marq__window::-webkit-scrollbar {
+    display: none;
+  }
+  .marq__track {
+    animation: none;
+    width: auto;
+  }
+  .marq__row[aria-hidden='true'] {
+    display: none;
+  }
+  .marq__row li {
+    padding: 24px 28px;
+    scroll-snap-align: start;
+  }
+  .marq__row img {
+    height: 28px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .marq__window {
+    overflow-x: auto;
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+  .marq__track {
+    animation: none;
+    width: auto;
+  }
+  .marq__row[aria-hidden='true'] {
+    display: none;
+  }
+}
+
+/* Event hos oss */
+.upcoming {
+  padding-block: clamp(80px, 10vw, 144px);
+}
+.etiles {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(16px, 2vw, 28px);
+}
+.etile {
+  min-width: 0;
+}
+.etile__link {
+  position: relative;
+  display: block;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  border-radius: 16px;
+  background: var(--navy);
+  color: #fff;
+}
+.etile__link img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.9s var(--ease);
+}
+.etile__link::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(8, 22, 47, 0) 40%, rgba(8, 22, 47, 0.88) 100%);
+  pointer-events: none;
+}
+.etile__link:hover img {
+  transform: scale(1.05);
+}
+.etile__body {
+  position: absolute;
+  z-index: 1;
+  inset: auto 0 0 0;
+  display: grid;
+  gap: 6px;
+  padding: clamp(18px, 2.2vw, 28px);
+}
+.etile__date {
+  font-size: 0.85rem;
+  color: rgba(248, 250, 252, 0.78);
+}
+.etile__title {
+  font-family: var(--display);
+  font-size: clamp(1.25rem, 1.8vw, 1.6rem);
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.015em;
+}
+.etile__more {
+  margin-top: 6px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #9cc0ff;
+}
+.etile__more span {
+  display: inline-block;
+  transition: transform 0.3s var(--ease);
+}
+.etile__link:hover .etile__more span {
+  transform: translateX(4px);
+}
+.etile__link:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+}
+@media (max-width: 960px) {
+  .etiles {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 560px) {
+  .etiles {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* =========================================================================
+   Runda 9: ikonsektion, bild + text, bolag (pinnad)
+   ========================================================================= */
+.huset {
+  padding-block: clamp(72px, 9vw, 128px);
+}
+.huset__head {
+  max-width: 760px;
+  margin: 0 auto clamp(36px, 5vw, 60px);
+  text-align: center;
+}
+.huset__title {
+  font-size: clamp(2rem, 4.2vw, 3.2rem);
+  font-weight: 600;
+  line-height: 1.12;
+  letter-spacing: -0.025em;
+}
+.huset__text {
+  margin: 22px auto 0;
+  max-width: 58ch;
+  font-size: 1.08rem;
+  color: var(--muted-dark);
+}
+.huset__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+.hcardlink {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 22px 24px;
+  border: 1px solid var(--line-light);
+  border-radius: 12px;
+  background: #fff;
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: 1.05rem;
+  color: var(--navy);
+  transition:
+    border-color 0.3s,
+    box-shadow 0.35s,
+    transform 0.35s var(--ease);
+}
+.hcardlink svg:first-child {
+  flex: none;
+  color: var(--accent-strong);
+}
+.hcardlink span {
+  flex: 1;
+}
+.hcardlink__arrow {
+  flex: none;
+  color: var(--muted-dark);
+  transition:
+    transform 0.3s var(--ease),
+    color 0.3s;
+}
+.hcardlink:hover {
+  border-color: rgba(29, 78, 216, 0.5);
+  box-shadow: 0 14px 30px -18px rgba(29, 78, 216, 0.45);
+  transform: translateY(-2px);
+}
+.hcardlink:hover .hcardlink__arrow {
+  transform: translateX(4px);
+  color: var(--accent-strong);
+}
+.hcardlink:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+@media (max-width: 960px) {
+  .huset__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 560px) {
+  .huset__grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Bild på ena sidan, text på den andra */
+.split {
+  padding-block: clamp(64px, 8vw, 112px);
+}
+.split__grid {
+  display: grid;
+  grid-template-columns: 1.05fr 1fr;
+  gap: clamp(28px, 6vw, 96px);
+  align-items: center;
+}
+.split--reverse .split__media {
+  order: 2;
+}
+.split__media {
+  overflow: hidden;
+  border-radius: 18px;
+  background: var(--tint);
+  aspect-ratio: 4 / 3;
+}
+.split__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.split__title {
+  font-size: clamp(1.7rem, 3vw, 2.5rem);
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  max-width: 18ch;
+}
+.split__text p {
+  margin: 18px 0 28px;
+  max-width: 46ch;
+  font-size: 1.04rem;
+  color: var(--muted-dark);
+}
+@media (max-width: 860px) {
+  .split__grid {
+    grid-template-columns: 1fr;
+  }
+  .split--reverse .split__media {
+    order: 0;
+  }
+}
+
+/* Länk till bolagets webbplats i scroll-sektionen */
+.house__visit {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 20px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: #9cc0ff;
+  transition: color 0.25s;
+}
+.house__visit:hover {
+  color: #fff;
+}
+.house__visit:focus-visible {
+  outline: 2px solid #60a5fa;
+  outline-offset: 4px;
+  border-radius: 4px;
+}
+.hcard .house__visit {
+  margin-top: 14px;
+}
