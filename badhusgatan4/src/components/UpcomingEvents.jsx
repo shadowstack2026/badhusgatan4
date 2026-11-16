@@ -1,12 +1,15 @@
 import { Link } from 'react-router-dom'
+import { Coffee, Lightbulb, Users } from 'lucide-react'
 import { useEvents } from '../lib/EventsContext'
-import { longDate } from '../lib/events'
+import { eventFormats } from '../data/sections'
+import EventCard from './EventCard'
 import Reveal from './Reveal'
 
-// "Event hos oss": stora bildkort med bara titel och datum.
+const ICONS = { Users, Coffee, Lightbulb }
+
+// "Event hos oss": tre rutor om vad vi brukar göra, sedan kommande event som stora bildkort.
 export default function UpcomingEvents() {
   const list = useEvents().upcoming.slice(0, 3)
-  if (!list.length) return null
   return (
     <section className="section section--tint upcoming" id="kommande-event">
       <div className="container">
@@ -16,22 +19,29 @@ export default function UpcomingEvents() {
             Se alla event <span className="link__arrow" aria-hidden="true">→</span>
           </Link>
         </Reveal>
-        <ul className="etiles">
-          {list.map((e, i) => (
-            <Reveal as="li" key={e.slug} delay={i * 100} className="etile">
-              <Link to={`/event/${e.slug}`} className="etile__link">
-                {e.image && <img src={e.image} alt="" width="800" height="1000" loading="lazy" />}
-                <span className="etile__body">
-                  <span className="etile__date">{longDate(e.date)}</span>
-                  <span className="etile__title">{e.title}</span>
-                  <span className="etile__more">
-                    Läs mer <span aria-hidden="true">→</span>
-                  </span>
+
+        <ul className="formats">
+          {eventFormats.map((f, i) => {
+            const Icon = ICONS[f.icon]
+            return (
+              <Reveal as="li" key={f.title} delay={i * 80} className="format">
+                <span className="hc__ico">
+                  <Icon size={22} strokeWidth={1.5} aria-hidden="true" />
                 </span>
-              </Link>
-            </Reveal>
-          ))}
+                <h3>{f.title}</h3>
+                <p>{f.text}</p>
+              </Reveal>
+            )
+          })}
         </ul>
+
+        {list.length > 0 && (
+          <div className="egrid evgrid">
+            {list.map((e, i) => (
+              <EventCard key={e.slug} event={e} delay={i * 100} />
+            ))}
+          </div>
+        )}
       </div>
     </section>
   )

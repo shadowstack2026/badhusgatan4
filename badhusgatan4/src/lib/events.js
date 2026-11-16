@@ -44,6 +44,13 @@ export const shortDate = (iso) => {
   return `${d.getDate()} ${MONTHS[d.getMonth()].slice(0, 3)}`
 }
 export const dayNumber = (iso) => parseDate(iso).getDate()
+// "2026-11-18" -> "18/11"
+export const slashDate = (iso) => {
+  const d = parseDate(iso)
+  return `${d.getDate()}/${d.getMonth() + 1}`
+}
+// Online-event känns igen på platsen ("Online", "Zoom", "Teams" osv.)
+export const isOnline = (e) => /online|digital|zoom|teams|webb|distans/i.test(e.location || '')
 export const monthShort = (iso) => MONTHS[parseDate(iso).getMonth()].slice(0, 3)
 
 export const timeRange = (e) => (e.startTime ? (e.endTime ? `${e.startTime}–${e.endTime}` : e.startTime) : '')

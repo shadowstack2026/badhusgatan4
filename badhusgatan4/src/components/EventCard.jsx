@@ -1,36 +1,23 @@
 import { Link } from 'react-router-dom'
-import { dayNumber, longDate, monthShort, spotStatus, timeRange } from '../lib/events'
+import { isOnline, slashDate } from '../lib/events'
 import Reveal from './Reveal'
-import StatusLabel from './StatusLabel'
 
+// Eventkort: stor bild i blå duoton med datum (18/11) och en liten etikett, text under.
 export default function EventCard({ event: e, delay = 0 }) {
-  const st = spotStatus(e)
-  const time = timeRange(e)
   return (
-    <Reveal as="article" delay={delay} className="ecard">
-      <div className="media ecard__media">
-        <img src={e.image} alt="" loading="lazy" />
-        <span className="ecard__date" aria-hidden="true">
-          <strong>{dayNumber(e.date)}</strong>
-          <span>{monthShort(e.date)}</span>
+    <Reveal as="article" delay={delay} className="evc">
+      <Link to={`/event/${e.slug}`} className="evc__link">
+        <span className="evc__media">
+          {e.image && <img src={e.image} alt="" width="800" height="500" loading="lazy" decoding="async" />}
+          <span className="evc__date">{slashDate(e.date)}</span>
+          <span className="evc__tag">{isOnline(e) ? 'Online' : 'På plats'}</span>
         </span>
-      </div>
-      <div className="ecard__body">
-        <span className="pill">{e.category}</span>
-        <h3>
-          <Link to={`/event/${e.slug}`} className="ecard__link">
-            <span className="ecard__title">{e.title}</span>
-          </Link>
-        </h3>
-        <p className="ecard__summary">{e.summary}</p>
-        <p className="ecard__meta">
-          {longDate(e.date)}
-          {time && ` · ${time}`}
-          <br />
-          {e.location}
-        </p>
-        <StatusLabel status={st.status} label={st.label} className="status--small ecard__status" />
-      </div>
+        <span className="evc__body">
+          <span className="evc__cat">{e.category}</span>
+          <span className="evc__title">{e.title}</span>
+          {e.summary && <span className="evc__summary">{e.summary}</span>}
+        </span>
+      </Link>
     </Reveal>
   )
 }

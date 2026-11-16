@@ -278,7 +278,7 @@ export const nextStep = {
 //     "to" = sidan, "hash" = sektionen på sidan (id).
 export const navLinks = [
   { label: 'Arbetsplatser', to: '/', hash: 'arbetsplatser', availability: true }, // visas bara när SHOW_AVAILABILITY är true
-  { label: 'Ekosystemet', to: '/', hash: 'bolag' },
+  { label: 'Community', to: '/', hash: 'bolag' },
   { label: 'Event', to: '/event' },
   { label: 'Om oss', to: '/om-oss' },
   { label: 'Kontakt', to: '/', hash: 'kontakt' },

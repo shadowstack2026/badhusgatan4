@@ -1,12 +1,11 @@
-import { Link } from 'react-router-dom'
-import { ArrowRight, CalendarDays, Coffee, MessagesSquare, Monitor, Users, Wifi } from 'lucide-react'
+import { CalendarDays, Coffee, MessagesSquare, Monitor, Users, Wifi } from 'lucide-react'
 import { features } from '../data/features'
 import { intro } from '../data/sections'
 import Reveal from './Reveal'
 
 const ICONS = { Monitor, Wifi, Users, MessagesSquare, Coffee, CalendarDays }
 
-// Under hero: centrerad rubrik och text, sedan små kort med ikon, etikett och pil.
+// Under hero: centrerad rubrik och text, sedan små kort med ikon och etikett (inte klickbara).
 export default function Huset() {
   return (
     <section className="section section--light huset" id="huset">
@@ -21,11 +20,15 @@ export default function Huset() {
             const Icon = ICONS[f.icon]
             return (
               <Reveal as="li" key={f.label} delay={(i % 3) * 70}>
-                <Link to={f.to} className="hcardlink">
-                  <Icon size={22} strokeWidth={1.5} aria-hidden="true" />
-                  <span>{f.label}</span>
-                  <ArrowRight className="hcardlink__arrow" size={18} strokeWidth={1.75} aria-hidden="true" />
-                </Link>
+                <div className="hc">
+                  <span className="hc__top">
+                    <span className="hc__ico">
+                      <Icon size={22} strokeWidth={1.5} aria-hidden="true" />
+                    </span>
+                  </span>
+                  <span className="hc__label">{f.label}</span>
+                  <span className="hc__bar" aria-hidden="true" />
+                </div>
               </Reveal>
             )
           })}

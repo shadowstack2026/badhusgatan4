@@ -1,3 +1,5 @@
+import gruppbild from '../assets/badhusgatan4.jpg'
+
 // ============================================================================
 //  SECTIONS.JS – texterna och bilderna på startsidan under hero
 // ============================================================================
@@ -24,6 +26,25 @@ export const whySplit = {
   title: 'Varför finns Badhusgatan 4?',
   text: 'För att det är lättare att bygga när man inte gör det ensam. Badhusgatan 4 är en plats där bolagen kan hitta arbetsro, bolla idéer och hjälpa varandra framåt. Ekosystemet finns för att alla har något att bidra med.',
   button: { label: 'Kom förbi', to: { pathname: '/', hash: '#kontakt' } },
-  image: 'https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&w=1200&q=75', // TILLFÄLLIGT
-  alt: 'Ett samtal över ett bord med laptops och anteckningar',
+  image: gruppbild, // src/assets/badhusgatan4.jpg
+  alt: 'Gruppbild på människorna i huset framför entrén till Badhusgatan 4',
 }
+
+// De tre rutorna ovanför eventen. icon = namn på en ikon från lucide-react (se UpcomingEvents.jsx).
+export const eventFormats = [
+  {
+    title: 'Community',
+    text: 'Träffar för alla i huset. Lär känna bolagen och människorna runt dig.',
+    icon: 'Users',
+  },
+  {
+    title: 'Frukost & fika',
+    text: 'En stund över en kopp utan agenda. Bara tid att prata med varandra.',
+    icon: 'Coffee',
+  },
+  {
+    title: 'Workshops',
+    text: 'Korta pass där någon delar med sig av något hen kan och alla lär sig något nytt.',
+    icon: 'Lightbulb',
+  },
+]
