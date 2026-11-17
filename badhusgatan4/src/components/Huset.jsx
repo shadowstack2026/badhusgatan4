@@ -1,9 +1,9 @@
-import { CalendarDays, Coffee, MessagesSquare, Monitor, Users, Wifi } from 'lucide-react'
+import { CalendarDays, Coffee, Lightbulb, MessagesSquare, Monitor, Users, Wifi } from 'lucide-react'
 import { features } from '../data/features'
 import { intro } from '../data/sections'
 import Reveal from './Reveal'
 
-const ICONS = { Monitor, Wifi, Users, MessagesSquare, Coffee, CalendarDays }
+const ICONS = { Monitor, Wifi, Users, MessagesSquare, Coffee, CalendarDays, Lightbulb }
 
 // Under hero: centrerad rubrik och text, sedan små kort med ikon och etikett (inte klickbara).
 export default function Huset() {

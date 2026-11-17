@@ -7,6 +7,7 @@ const N = companies.length
 
 // En länk till bolagets webbplats (ny flik).
 function Visit({ company }) {
+  if (!company.url) return null
   return (
     <a className="house__visit" href={company.url} target="_blank" rel="noopener noreferrer">
       Besök {company.namn}
@@ -16,12 +17,53 @@ function Visit({ company }) {
   )
 }
 
+// Tagline, nyckeltal och förmågor (bara det bolaget har fyllt i).
+function Facts({ company }) {
+  return (
+    <>
+      {company.tagline && <p className="house__tagline">{company.tagline}</p>}
+      {company.kommer && <p className="house__kommer">Uppgifter kommer.</p>}
+    </>
+  )
+}
+
+function Extras({ company }) {
+  return (
+    <>
+      {company.nyckeltal && (
+        <ul className="house__facts">
+          {company.nyckeltal.map((n) => (
+            <li key={n.varde}>
+              <strong>{n.varde}</strong>
+              {n.text}
+            </li>
+          ))}
+        </ul>
+      )}
+      {company.ekosystem && (
+        <ul className="house__caps" aria-label={`Det här gör ${company.namn}`}>
+          {company.ekosystem.map((e) => (
+            <li key={e.titel}>{e.titel}</li>
+          ))}
+        </ul>
+      )}
+    </>
+  )
+}
+
 function Shot({ company, eager, active }) {
+  if (!company.bild) {
+    return (
+      <div className={`house__img house__noimg${active ? ' is-active' : ''}`} aria-hidden="true">
+        {company.namn}
+      </div>
+    )
+  }
   return (
     <img
       className={`house__img${active ? ' is-active' : ''}`}
       src={company.bild}
-      alt={active ? `Bild från ${company.namn}` : ''}
+      alt={active ? company.bildAlt || `Bild från ${company.namn}` : ''}
       aria-hidden={!active}
       width="1400"
       height="1000"
@@ -108,9 +150,11 @@ export default function CompanyShowcase() {
                   {company.namn}
                 </h3>
               </div>
+              <Facts company={company} />
               <p className="house__text" key={`p-${company.namn}`}>
                 {company.beskrivning}
               </p>
+              <Extras company={company} />
               <Visit company={company} />
             </div>
           </div>
@@ -174,10 +218,16 @@ function CompanyCards() {
           <li key={c.namn} className="hcard" data-i={i} ref={(el) => (refs.current[i] = el)}>
             <Reveal>
               <figure className="hcard__img">
-                <img src={c.bild} alt={`Bild från ${c.namn}`} width="1400" height="1000" loading="lazy" decoding="async" />
+                {c.bild ? (
+                  <img src={c.bild} alt={c.bildAlt || `Bild från ${c.namn}`} width="1400" height="1000" loading="lazy" decoding="async" />
+                ) : (
+                  <div className="house__noimg">{c.namn}</div>
+                )}
               </figure>
               <h3 className="hcard__title">{c.namn}</h3>
+              <Facts company={c} />
               <p className="hcard__text">{c.beskrivning}</p>
+              <Extras company={c} />
               <Visit company={c} />
             </Reveal>
           </li>

@@ -111,7 +111,7 @@ export const events = [
     ],
     forWhom: 'Ägare och medarbetare i små bolag som vill komma igång på riktigt.',
     price: 'Gratis',
-    host: { name: 'Maja Lindgren', role: 'UX-designer, Nordlys Studio' },
+    host: { name: 'Maja Lindgren', role: 'UX-designer' },
     spotsTotal: 30,
     spotsLeft: 18,
   },
@@ -161,7 +161,7 @@ export const events = [
     ],
     forWhom: 'Alla som vill ha ögon på sitt projekt, från första skiss till färdig produkt.',
     price: 'Gratis',
-    host: { name: 'Maja Lindgren', role: 'UX-designer, Nordlys Studio' },
+    host: { name: 'Maja Lindgren', role: 'UX-designer' },
     spotsTotal: 12,
     spotsLeft: 0, // 0 = fullt, väntelistan visas
   },

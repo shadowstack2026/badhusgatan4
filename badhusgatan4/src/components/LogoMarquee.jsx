@@ -1,4 +1,5 @@
 import { companies } from '../data/ecosystem'
+import CompanyLogo, { CompanyLink } from './CompanyLogo'
 
 // Rullande logotyper. Listan visas två gånger så att loopen är sömlös.
 // Pausar vid hover och fokus. På mobil (och med "minska rörelse") blir den en vanlig svepbar rad.
@@ -7,15 +8,9 @@ export default function LogoMarquee() {
     <ul className="marq__row" aria-hidden={hidden || undefined}>
       {companies.map((c) => (
         <li key={c.namn}>
-          <a
-            href={c.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label={`${c.namn} (öppnas i ny flik)`}
-            tabIndex={hidden ? -1 : 0}
-          >
-            <img src={c.logo} alt="" width="200" height="54" loading="lazy" draggable="false" />
-          </a>
+          <CompanyLink company={c} hidden={hidden}>
+            <CompanyLogo company={c} />
+          </CompanyLink>
         </li>
       ))}
     </ul>

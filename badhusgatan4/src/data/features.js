@@ -11,4 +11,7 @@ export const features = [
   { label: 'Samtalsrum', icon: 'MessagesSquare' },
   { label: 'Kaffe och te', icon: 'Coffee' },
   { label: 'Event', icon: 'CalendarDays' },
+  { label: 'Community', icon: 'Users' },
+  { label: 'Frukost & fika', icon: 'Coffee' },
+  { label: 'Workshops', icon: 'Lightbulb' },
 ]

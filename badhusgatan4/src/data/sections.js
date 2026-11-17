@@ -29,22 +29,3 @@ export const whySplit = {
   image: gruppbild, // src/assets/badhusgatan4.jpg
   alt: 'Gruppbild på människorna i huset framför entrén till Badhusgatan 4',
 }
-
-// De tre rutorna ovanför eventen. icon = namn på en ikon från lucide-react (se UpcomingEvents.jsx).
-export const eventFormats = [
-  {
-    title: 'Community',
-    text: 'Träffar för alla i huset. Lär känna bolagen och människorna runt dig.',
-    icon: 'Users',
-  },
-  {
-    title: 'Frukost & fika',
-    text: 'En stund över en kopp utan agenda. Bara tid att prata med varandra.',
-    icon: 'Coffee',
-  },
-  {
-    title: 'Workshops',
-    text: 'Korta pass där någon delar med sig av något hen kan och alla lär sig något nytt.',
-    icon: 'Lightbulb',
-  },
-]
