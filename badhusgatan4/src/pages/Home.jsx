@@ -4,6 +4,7 @@ import SplitSection from '../components/SplitSection'
 import CompanyShowcase from '../components/CompanyShowcase'
 import Workspaces from '../components/Workspaces'
 import UpcomingEvents from '../components/UpcomingEvents'
+import Location from '../components/Location'
 import Contact from '../components/Contact'
 import { ecosystemSplit, whySplit } from '../data/sections'
 import { SHOW_AVAILABILITY } from '../config'
@@ -20,6 +21,7 @@ export default function Home() {
       <CompanyShowcase />
       <Huset />
       {SHOW_AVAILABILITY && <Workspaces />}
+      <Location />
       <UpcomingEvents />
       <Contact />
     </main>
