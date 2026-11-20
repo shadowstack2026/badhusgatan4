@@ -1,15 +1,12 @@
-import { useCallback, useEffect, useRef, useState } from 'react'
-import { ArrowUpRight, Building2 } from 'lucide-react'
+import { useState } from 'react'
+import { ArrowUpRight } from 'lucide-react'
 import { companies } from '../data/ecosystem'
-import Reveal from './Reveal'
-
-const N = companies.length
 
 // En länk till bolagets webbplats (ny flik).
 function Visit({ company }) {
   if (!company.url) return null
   return (
-    <a className="house__visit" href={company.url} target="_blank" rel="noopener noreferrer">
+    <a className="co__visit" href={company.url} target="_blank" rel="noopener noreferrer">
       Besök {company.namn}
       <ArrowUpRight size={16} strokeWidth={1.75} aria-hidden="true" />
       <span className="sr-only"> (öppnas i ny flik)</span>
@@ -17,222 +14,86 @@ function Visit({ company }) {
   )
 }
 
-// Tagline, nyckeltal och förmågor (bara det bolaget har fyllt i).
-function Facts({ company }) {
-  return (
-    <>
-      {company.tagline && <p className="house__tagline">{company.tagline}</p>}
-      {company.kommer && <p className="house__kommer">Uppgifter kommer.</p>}
-    </>
-  )
-}
-
-function Extras({ company }) {
-  return (
-    <>
-      {company.nyckeltal && (
-        <ul className="house__facts">
-          {company.nyckeltal.map((n) => (
-            <li key={n.varde}>
-              <strong>{n.varde}</strong>
-              {n.text}
-            </li>
-          ))}
-        </ul>
-      )}
-      {company.ekosystem && (
-        <ul className="house__caps" aria-label={`Det här gör ${company.namn}`}>
-          {company.ekosystem.map((e) => (
-            <li key={e.titel}>{e.titel}</li>
-          ))}
-        </ul>
-      )}
-    </>
-  )
-}
-
-function Shot({ company, eager, active }) {
-  if (!company.bild) {
-    return (
-      <div className={`house__img house__noimg${active ? ' is-active' : ''}`} aria-hidden="true">
-        {company.namn}
-      </div>
-    )
-  }
-  return (
-    <img
-      className={`house__img${active ? ' is-active' : ''}`}
-      src={company.bild}
-      alt={active ? company.bildAlt || `Bild från ${company.namn}` : ''}
-      aria-hidden={!active}
-      width="1400"
-      height="1000"
-      loading={eager ? 'eager' : 'lazy'}
-      decoding="async"
-    />
-  )
-}
-
-// Pinnad scroll-sektion om bolagen i ekosystemet: samma uppbyggnad som "Det här har vi".
-// På dator byts bolag medan man scrollar. På mobil och med "minska rörelse" är det vanliga kort.
+// Bolagen i ekosystemet: klicka på ett bolag för att se det. Ingen scroll-pinning.
 export default function CompanyShowcase() {
-  const section = useRef(null)
   const [active, setActive] = useState(0)
-  const activeRef = useRef(0)
-
-  useEffect(() => {
-    const el = section.current
-    const mq = window.matchMedia('(min-width: 901px) and (prefers-reduced-motion: no-preference)')
-    let raf = 0
-
-    const update = () => {
-      raf = 0
-      if (!mq.matches) return
-      const rect = el.getBoundingClientRect()
-      const travel = el.offsetHeight - window.innerHeight
-      const p = Math.min(1, Math.max(0, -rect.top / travel))
-      const i = Math.min(N - 1, Math.floor(p * N))
-      if (i !== activeRef.current) {
-        activeRef.current = i
-        setActive(i)
-      }
-    }
-    const onScroll = () => {
-      if (!raf) raf = requestAnimationFrame(update)
-    }
-    update()
-    window.addEventListener('scroll', onScroll, { passive: true })
-    window.addEventListener('resize', onScroll)
-    return () => {
-      window.removeEventListener('scroll', onScroll)
-      window.removeEventListener('resize', onScroll)
-      if (raf) cancelAnimationFrame(raf)
-    }
-  }, [])
-
-  // Klick i listan: scrolla till mitten av det bolagets del.
-  const goTo = useCallback((i) => {
-    const el = section.current
-    const top = el.getBoundingClientRect().top + window.scrollY
-    const travel = el.offsetHeight - window.innerHeight
-    window.scrollTo({ top: top + (travel * (i + 0.5)) / N, behavior: 'smooth' })
-  }, [])
-
   const company = companies[active]
 
   return (
-    <section className="house" id="bolag" ref={section} style={{ '--n': N }}>
-      <h2 className="sr-only">Bolagen i ekosystemet, ett i taget</h2>
+    <section className="co" id="bolag">
+      <div className="container">
+        <h2 className="sr-only">Bolagen i ekosystemet</h2>
 
-      {/* ---- Dator: pinnad scroll ---- */}
-      <div className="house__pin">
-        <div className="container house__stage">
-          <div className="house__left">
-            <ol className="house__index" aria-label="Bolag i ekosystemet">
-              {companies.map((c, i) => (
-                <li key={c.namn}>
-                  <button
-                    type="button"
-                    className={i === active ? 'is-active' : ''}
-                    aria-current={i === active}
-                    onClick={() => goTo(i)}
-                  >
-                    <Building2 className="house__ico" size={22} strokeWidth={1.5} aria-hidden="true" />
-                    <span className="house__name">{c.namn}</span>
-                  </button>
-                </li>
-              ))}
-            </ol>
-
-            <div className="house__detail" aria-live="polite">
-              <div className="house__mask">
-                <h3 className="house__title" key={`t-${company.namn}`}>
-                  {company.namn}
-                </h3>
-              </div>
-              <Facts company={company} />
-              <p className="house__text" key={`p-${company.namn}`}>
-                {company.beskrivning}
-              </p>
-              <Extras company={company} />
-              <Visit company={company} />
-            </div>
-          </div>
-
-          <div className="house__right">
-            <figure className="house__frame">
-              <div className="house__imgs">
-                {companies.map((c, i) => (
-                  <Shot key={c.namn} company={c} eager={i === 0} active={i === active} />
-                ))}
-              </div>
-            </figure>
-          </div>
-        </div>
-      </div>
-
-      {/* ---- Mobil och "minska rörelse": staplade kort ---- */}
-      <CompanyCards />
-    </section>
-  )
-}
-
-function CompanyCards() {
-  const [current, setCurrent] = useState(0)
-  const refs = useRef([])
-
-  useEffect(() => {
-    const io = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((e) => {
-          if (e.isIntersecting) setCurrent(Number(e.target.dataset.i))
-        })
-      },
-      { rootMargin: '-45% 0px -45% 0px' },
-    )
-    refs.current.forEach((el) => el && io.observe(el))
-    return () => io.disconnect()
-  }, [])
-
-  const jump = (i) => refs.current[i]?.scrollIntoView({ behavior: 'smooth', block: 'center' })
-
-  return (
-    <div className="house__cards">
-      <div className="house__topbar">
-        <div className="house__dots" role="group" aria-label="Hoppa till bolag">
+        <div className="co__tabs" role="tablist" aria-label="Bolag i ekosystemet">
           {companies.map((c, i) => (
             <button
               key={c.namn}
               type="button"
-              className={i === current ? 'is-active' : ''}
-              aria-label={`${i + 1}. ${c.namn}`}
-              aria-current={i === current}
-              onClick={() => jump(i)}
-            />
+              role="tab"
+              id={`co-tab-${i}`}
+              aria-selected={i === active}
+              aria-controls="co-panel"
+              tabIndex={i === active ? 0 : -1}
+              className={`co__tab${i === active ? ' is-active' : ''}`}
+              onClick={() => setActive(i)}
+              onKeyDown={(e) => {
+                if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
+                  e.preventDefault()
+                  const next = (i + (e.key === 'ArrowRight' ? 1 : -1) + companies.length) % companies.length
+                  setActive(next)
+                  document.getElementById(`co-tab-${next}`)?.focus()
+                }
+              }}
+            >
+              {c.namn}
+            </button>
           ))}
         </div>
-      </div>
 
-      <ul>
-        {companies.map((c, i) => (
-          <li key={c.namn} className="hcard" data-i={i} ref={(el) => (refs.current[i] = el)}>
-            <Reveal>
-              <figure className="hcard__img">
-                {c.bild ? (
-                  <img src={c.bild} alt={c.bildAlt || `Bild från ${c.namn}`} width="1400" height="1000" loading="lazy" decoding="async" />
-                ) : (
-                  <div className="house__noimg">{c.namn}</div>
-                )}
-              </figure>
-              <h3 className="hcard__title">{c.namn}</h3>
-              <Facts company={c} />
-              <p className="hcard__text">{c.beskrivning}</p>
-              <Extras company={c} />
-              <Visit company={c} />
-            </Reveal>
-          </li>
-        ))}
-      </ul>
-    </div>
+        <div className="co__panel" id="co-panel" role="tabpanel" aria-labelledby={`co-tab-${active}`}>
+          <div className="co__text" key={company.namn}>
+            <h3 className="co__title">{company.namn}</h3>
+            {company.tagline && <p className="co__tagline">{company.tagline}</p>}
+            {company.kommer && <p className="co__kommer">Uppgifter kommer.</p>}
+            <p className="co__desc">{company.beskrivning}</p>
+
+            {company.nyckeltal && (
+              <ul className="co__facts">
+                {company.nyckeltal.map((n) => (
+                  <li key={n.varde}>
+                    <strong>{n.varde}</strong>
+                    {n.text}
+                  </li>
+                ))}
+              </ul>
+            )}
+            {company.ekosystem && (
+              <ul className="co__caps" aria-label={`Det här gör ${company.namn}`}>
+                {company.ekosystem.map((e) => (
+                  <li key={e.titel}>{e.titel}</li>
+                ))}
+              </ul>
+            )}
+            <Visit company={company} />
+          </div>
+
+          <figure className="co__img" key={`img-${company.namn}`}>
+            {company.bild ? (
+              <img
+                src={company.bild}
+                alt={company.bildAlt || `Bild från ${company.namn}`}
+                width="1400"
+                height="1000"
+                decoding="async"
+              />
+            ) : (
+              <div className="co__noimg" aria-hidden="true">
+                {company.namn}
+              </div>
+            )}
+          </figure>
+        </div>
+      </div>
+    </section>
   )
 }

@@ -15,10 +15,10 @@ export default function Home() {
   return (
     <main>
       <Hero />
-      <Huset />
       <SplitSection data={ecosystemSplit} id="om-ekosystemet" />
       <SplitSection data={whySplit} reverse tint id="varfor" />
       <CompanyShowcase />
+      <Huset />
       {SHOW_AVAILABILITY && <Workspaces />}
       <UpcomingEvents />
       <Contact />
